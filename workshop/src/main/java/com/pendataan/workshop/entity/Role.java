@@ -1,4 +1,4 @@
-package com.pendataan.workshop.entity.users;
+package com.pendataan.workshop.entity;
 
 public enum Role {
 

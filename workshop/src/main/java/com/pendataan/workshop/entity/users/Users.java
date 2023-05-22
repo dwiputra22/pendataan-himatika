@@ -1,6 +1,7 @@
 package com.pendataan.workshop.entity.users;
 
 import com.pendataan.workshop.Token.Token;
+import com.pendataan.workshop.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
