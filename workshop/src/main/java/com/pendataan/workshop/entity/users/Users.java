@@ -1,32 +1,44 @@
 package com.pendataan.workshop.entity.users;
 
-import com.pendataan.workshop.Token.Token;
 import com.pendataan.workshop.entity.Role;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
-@Data
-@Builder
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class Users implements UserDetails {
+    @SequenceGenerator(
+            name = "users_sequence",
+            sequenceName = "users_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY,
+    generator = "users_sequence")
+    private Long id;
     @Column(name = "nim")
     private String nim;
+    @Email(regexp = "[a-z0-9._%+-]+@perbanas+\\.id",
+    flags = Pattern.Flag.CASE_INSENSITIVE)
+    @Column(name = "email")
+    private String email;
     @Column(name = "nama")
     private String nama;
     @Column(name = "password")
@@ -36,13 +48,21 @@ public class Users implements UserDetails {
     private Role status;
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    @OneToMany(mappedBy = "users")
-    private List<Token> tokens;
-
+    public Users(String nama, String nim, String email, String password, Role status) {
+        this.nim = nim;
+        this.password = password;
+        this.email = email;
+        this.nama = nama;
+        this.status = status;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(status.name()));
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(status.name());
+        return Collections.singletonList(authority);
     }
 
     @Override
@@ -62,7 +82,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override

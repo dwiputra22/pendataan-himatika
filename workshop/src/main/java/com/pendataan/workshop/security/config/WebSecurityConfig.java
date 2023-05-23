@@ -1,6 +1,6 @@
-package com.example.demo.security.config;
+package com.pendataan.workshop.security.config;
 
-import com.example.demo.appuser.AppUserService;
+import com.pendataan.workshop.services.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,13 +10,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AppUserService appUserService;
+    private final UsersService usersService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -24,11 +25,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/api/v*/registration/**")
-                    .permitAll()
+                    .antMatchers("/api/v*/registration/**").permitAll()
+                    .antMatchers("/api/v1/users").hasRole("ADMIN")
                 .anyRequest()
-                .authenticated().and()
-                .formLogin();
+                .authenticated();
+        http
+                .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/himatika", true).and()
+                .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/");
+                ;
     }
 
     @Override
@@ -41,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(appUserService);
+        provider.setUserDetailsService(usersService);
         return provider;
     }
 }

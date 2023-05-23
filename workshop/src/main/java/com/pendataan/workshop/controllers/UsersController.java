@@ -11,23 +11,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(path = "/api/v1/users")
 public class UsersController {
 
     @Autowired
     private UsersService usersService;
-
-    @PostMapping
-    public ResponseEntity<Users> registerUsers(@RequestBody Users users) {
-        return ResponseEntity.ok(usersService.registerUsers(users));
-    }
 
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {
         return ResponseEntity.ok(usersService.getAllUsers());
     }
 
-    @GetMapping("/{nim}")
+    @GetMapping(path = "/{nim}")
     public ResponseEntity<Optional<Users>> getUsers(
             @RequestParam(value = "nim", defaultValue = "") String nim) {
         return ResponseEntity.ok(usersService.getUsers(nim));
