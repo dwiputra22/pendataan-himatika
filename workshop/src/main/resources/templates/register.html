@@ -18,43 +18,46 @@
                 You have successfully registered our app!
             </div>
         </div>
-        <form th:action="@{process-register}"
+        <form
               th:object="${user}"
               method="post"
               class="border-teal p-4 border-t-12 bg-white mb-6">
             <div class="mb-4">
                 <label for="nim" class="font-bold text-lg block mb-2">Nim</label>
-                <input id="nim" th:field="*{nim}" type="text" name="username" autocomplete="off"
+                <input id="nim" th:value="*{nim}" type="text" name="nim"
+                       th:errorClass="is-invalid"
                        class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                        placeholder="Masukkan Nim Anda">
-                <p th:errors = "*{nim}" class="text-danger"
+                <p th:errors = "*{nim}" class="invalid-feedback"
                    th:if="${#fields.hasErrors('nim')}"></p>
             </div>
             <div class="mb-4">
                 <label for="nama" class="font-bold text-lg block mb-2">Nama</label>
-                <input id="nama" th:field="*{nama}" type="text" name="nama" autocomplete="off"
+                <input id="nama" th:value="*{nama}" type="text" name="nama"
+                       th:errorClass="is-invalid"
                        class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                        placeholder="Masukkan Nama Anda">
-                <p th:errors = "*{nama}" class="text-danger"
+                <p th:errors = "*{nama}" class="invalid-feedback"
                    th:if="${#fields.hasErrors('nama')}"></p>
             </div>
             <div class="mb-4">
                 <label for="email" class="font-bold text-lg block mb-2">Email</label>
-                <input id="email" th:field="*{email}" type="text" name="email" autocomplete="off"
+                <input id="email" th:value="*{email}" type="text" name="email"
+                       th:errorClass="is-invalid"
                        class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                        placeholder="Masukkan Email Perbanas Anda">
-                <p th:errors = "*{email}" class="text-danger"
+                <p th:errors = "*{email}" class="invalid-feedback"
                    th:if="${#fields.hasErrors('email')}"></p>
             </div>
             <div class="mb-4">
                 <label for="password" class="font-bold text-lg block mb-2">Password</label>
-                <input id="password" th:field="*{password}" type="password" name="password" autocomplete="off"
+                <input id="password" th:value="*{password}" type="password" name="password"
+                       th:errorClass="is-invalid"
                        class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                        placeholder="Masukkan Password Anda">
+                <p th:errors = "*{password}" class="invalid-feedback"
+                   th:if="${#fields.hasErrors('password')}"></p>
             </div>
-            <p th:errors = "*{password}" class="text-danger"
-               th:if="${#fields.hasErrors('password')}"></p>
-
             <div class="flex items-center justify-between">
                 <input class="bg-green-500 text-white text-lg font-medium p-2 rounded inline-block w-full hover:bg-green-400 transition duration-400 hover:shadow-lg"
                        type="submit" value="Register">
@@ -70,3 +73,11 @@
 </div>
 </body>
 </html>
+
+<style>
+    .invalid-feedback{
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    }
+</style>

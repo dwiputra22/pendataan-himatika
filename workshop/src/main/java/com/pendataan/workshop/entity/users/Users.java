@@ -1,6 +1,5 @@
 package com.pendataan.workshop.entity.users;
 
-import com.pendataan.workshop.entity.Role;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -33,14 +33,18 @@ public class Users implements UserDetails {
             strategy = GenerationType.IDENTITY,
     generator = "users_sequence")
     private Long id;
+    @NotBlank(message = "Masukkan Nim Anda!")
     @Column(name = "nim")
     private String nim;
     @Email(regexp = "[a-z0-9._%+-]+@perbanas+\\.id",
-    flags = Pattern.Flag.CASE_INSENSITIVE)
+    flags = Pattern.Flag.CASE_INSENSITIVE, message = "Email Harus Menggunakan Akun Perbanas")
+    @NotBlank(message = "Masukkan Email Anda!")
     @Column(name = "email")
     private String email;
+    @NotBlank(message = "Masukkan Nama Anda!")
     @Column(name = "nama")
     private String nama;
+    @NotBlank(message = "Masukkan Password Anda!")
     @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
