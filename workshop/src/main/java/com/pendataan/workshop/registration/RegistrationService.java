@@ -1,14 +1,16 @@
 package com.pendataan.workshop.registration;
 
 import com.pendataan.workshop.email.EmailSender;
-import com.pendataan.workshop.entity.Role;
+import com.pendataan.workshop.entity.users.Role;
 import com.pendataan.workshop.entity.users.Users;
 import com.pendataan.workshop.registration.token.ConfirmationToken;
 import com.pendataan.workshop.registration.token.ConfirmationTokenService;
+import com.pendataan.workshop.repositories.UsersRepository;
 import com.pendataan.workshop.services.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +22,19 @@ public class RegistrationService {
     private final EmailValidator emailValidator;
     private final EmailSender emailSender;
     private final ConfirmationTokenService confirmationTokenService;
+    private final UsersRepository usersRepository;
 
+    public ModelAndView register(Users users) {
+        ModelAndView modelAndView = new ModelAndView();
+        Users user = new Users();
+        user.setNim(users.getNim());
+        user.setNama(users.getNama());
+        user.setEmail(users.getEmail());
+        user.setPassword(users.getPassword());
+        modelAndView.getModelMap().addAttribute("user", users);
+        modelAndView.setViewName("register");
+        return modelAndView;
+    }
     public String processRegister(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
