@@ -11,7 +11,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "api/v1/registration")
@@ -34,12 +36,14 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String processRegister(@Valid RegistrationRequest request, BindingResult bindingResult) {
+    public String processRegister(@Valid RegistrationRequest request,
+                                  BindingResult bindingResult,
+                                  HttpServletResponse response) throws IOException {
         if (bindingResult.hasErrors()) {
             return "api/v1/registration";
         }
         log.info(">> users : {}",request.toString());
-        return registrationService.processRegister(request);
+        return registrationService.processRegister(request,response);
     }
 
     @GetMapping(path = "confirm")

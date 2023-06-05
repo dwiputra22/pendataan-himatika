@@ -39,9 +39,6 @@ public class UsersService implements UserDetailsService {
                 .findByEmail(users.getEmail())
                 .isPresent();
         if (userExistEmail) {
-            // TODO check of attributes are the same and
-            // TODO if email not confirmed send confirmation email.
-
             throw new IllegalStateException("Email Anda Sudah di Daftarkan");
         }
 

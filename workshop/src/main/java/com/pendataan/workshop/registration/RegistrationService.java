@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Service
@@ -35,7 +37,7 @@ public class RegistrationService {
         modelAndView.setViewName("register");
         return modelAndView;
     }
-    public String processRegister(RegistrationRequest request) {
+    public String processRegister(RegistrationRequest request, HttpServletResponse response) throws IOException {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
 
@@ -57,6 +59,7 @@ public class RegistrationService {
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getNim(), link));
+        response.sendRedirect("/login");
         return token;
     }
 
