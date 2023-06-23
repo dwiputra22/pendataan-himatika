@@ -1,4 +1,4 @@
-package com.pendataan.workshop.anggota;
+package com.pendataan.anggota;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

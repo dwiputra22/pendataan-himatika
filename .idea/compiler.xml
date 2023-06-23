@@ -7,15 +7,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="pesertaworkshop" />
+        <module name="anggota" />
         <module name="workshop" />
+        <module name="peserta" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="anggota" target="17" />
+      <module name="pendataan" target="17" />
+      <module name="peserta" target="17" />
+      <module name="pesertaworkshop" target="19" />
+      <module name="testing" target="19" />
       <module name="workshop" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="anggota" options="-parameters" />
+      <module name="pendataan" options="-parameters" />
+      <module name="peserta" options="-parameters" />
+      <module name="pesertaworkshop" options="-parameters" />
       <module name="workshop" options="-parameters" />
     </option>
   </component>

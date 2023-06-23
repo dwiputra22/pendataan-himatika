@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/anggota/anggota.iml" filepath="$PROJECT_DIR$/anggota/anggota.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pendataan-himatika.iml" filepath="$PROJECT_DIR$/.idea/pendataan-himatika.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peserta/peserta.iml" filepath="$PROJECT_DIR$/peserta/peserta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pesertaworkshop.iml" filepath="$PROJECT_DIR$/pesertaworkshop.iml" />
       <module fileurl="file://$PROJECT_DIR$/workshop/workshop.iml" filepath="$PROJECT_DIR$/workshop/workshop.iml" />
     </modules>
   </component>

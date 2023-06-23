@@ -3,6 +3,11 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/PesertaWorkshop/pom.xml" />
+        <option value="$PROJECT_DIR$/anggota/pom.xml" />
+        <option value="$PROJECT_DIR$/peserta-workshop/pom.xml" />
+        <option value="$PROJECT_DIR$/peserta/pom.xml" />
+        <option value="$PROJECT_DIR$/workshops/pom.xml" />
         <option value="$PROJECT_DIR$/workshop/pom.xml" />
       </list>
     </option>
