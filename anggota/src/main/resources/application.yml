@@ -1,0 +1,49 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+#  servlet:
+#    context-path: /workshop/src/main/resources/files/
+#uploadDir: /files
+
+spring:
+  application:
+    name: pendataan-workshop
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/himatika
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        use_sql_comments: true
+    show-sql: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dwiputraramadhan221101@gmail.com
+    password: ggaibsliwcjjxvbh
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+
+#application:
+#  security:
+#    jwt:
+#      secret-key: 34743777217A25432646294A404E635266556A586E3272357538782F413F4428
+#      expiration: 60000 # 86400000 # a day
+#      refresh-token:
+#        expiration: 604800000 # 7 days
