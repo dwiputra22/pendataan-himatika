@@ -18,8 +18,12 @@ public class DokumentasiWorkshop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "judul_workshop")
-    private String judulWorkshop;
+    @Column(name = "nim")
+    private Integer nim;
+    @Column(name = "nama")
+    private String nama;
+    @Column(name= "thn_kepengurusan")
+    private String thnKepengurusan;
     @Column(name = "tgl_dokumentasi")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime tanggalDokumentasi;
@@ -32,6 +36,13 @@ public class DokumentasiWorkshop {
     private String type;
     @Column(name = "docName")
     private String docName;
+    @Column(name = "created_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime createdDate;
     @Column(name = "updatedDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime updatedDate;
+    @OneToOne
+    @JoinColumn(name = "workshop_id")
+    private Workshop workshop;
 }

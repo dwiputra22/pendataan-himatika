@@ -12,6 +12,8 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="/himatika">Home</a>
+    &emsp;&emsp;
     <a href="/himatika/proposal-workshop/input">Input Workshop</a>
 </nav>
 
@@ -20,29 +22,24 @@
         <thead>
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Nim</th>
-            <th scope="col">Nama</th>
-            <th scope="col">Tahun kepengurusan</th>
             <th scope="col">Judul Workshop</th>
             <th scope="col">Pembicara</th>
             <th scope="col">Tanggal Workshop</th>
-            <th scope="col">Proposal</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Updated Date</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="p :${proposalList}">
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.nim}"></td>
-            <td th:text="${p.nama}"></td>
-            <td th:text="${p.tahunKepengurusan}"></td>
-            <td th:text="${p.judulWorkshop}"></td>
-            <td th:text="${p.pembicara}"></td>
-            <td th:text="${p.tanggalWorkshop}"></td>
-            <td th:text="${p.docName}"></td>
-            <td><a class="btn btn-secondary btn-sm" th:href="@{/himatika/proposal-workshop/{docName}(docName=${p.docName})}">Download File</a>
-                <a style="color:blue" th:href="@{/himatika/proposal-workshop/editProposal/{id}(id=${p.id})}"><i class="fa-solid fa-pen-to-square ms-4"></i></a>
-                <a style="color:red" th:href="@{/himatika/proposal-workshop/deleteProposal/{id}/{judulWorkshop}(judulWorkshop=${p.judulWorkshop}, id=${p.id})}"><i class="fa-solid fa-trash ms-4"></i></a>
+        <tr th:each="w :${workshop}">
+            <td th:text="${w.id}"></td>
+            <td th:text="${w.judulWorkshop}"></td>
+            <td th:text="${w.pembicara}"></td>
+            <td th:text="${w.tanggalWorkshop}"></td>
+            <td th:text="${w.createdDate}"></td>
+            <td th:text="${w.updatedDate}"></td>
+            <td><a class="btn btn-secondary btn-sm" th:href="@{/himatika/proposal-workshop/{workshopId}/input(workshopId=${w.id})}">Input Proposal</a>
+            <td><a class="btn btn-secondary btn-sm" th:href="@{/himatika/proposal-workshop/{workshopId}(workshopId=${w.id})}">Lihat Proposal</a>
             </td>
         </tr>
 

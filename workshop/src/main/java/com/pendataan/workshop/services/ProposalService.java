@@ -1,7 +1,9 @@
 package com.pendataan.workshop.services;
 
 import com.pendataan.workshop.entity.ProposalWorkshop;
+import com.pendataan.workshop.entity.Workshop;
 import com.pendataan.workshop.repositories.PropWorkshopRepository;
+import com.pendataan.workshop.repositories.WorkshopRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,24 +34,30 @@ public class ProposalService {
     private static final Logger log = LoggerFactory.getLogger(ProposalService.class);
     public final String uploadDirectory = System.getProperty("user.dir") + "/files/proposal-workshop";
     private final PropWorkshopRepository propWorkshopRepository;
+    private final WorkshopRepository workshopRepository;
 
     public ModelAndView getAllProposal() {
         ModelAndView mav = new ModelAndView();
-        List<ProposalWorkshop> proposalList = propWorkshopRepository.findAll();
-        mav.getModelMap().addAttribute("proposalList", proposalList);
+        List<Workshop> workshop = workshopRepository.findAll();
+        mav.getModelMap().addAttribute("workshop", workshop);
         mav.setViewName("proposalWorkshop");
         return mav;
     }
 
-    public ResponseEntity<?> uploadProposal(
-            ProposalWorkshop proposalWorkshop,
-            MultipartFile suratProposal,
-            HttpServletResponse response
-    ) {
+    public ModelAndView getProposal(Long workshopId) {
+        ModelAndView mav = new ModelAndView();
+        ProposalWorkshop proposal = propWorkshopRepository.getById(workshopId);
+        mav.getModelMap().addAttribute("proposal", proposal);
+        mav.setViewName("tampilProposal");
+        return mav;
+    }
+
+    public ResponseEntity<?> uploadProposal(Long workshopId,
+                                            ProposalWorkshop proposalWorkshop,
+                                            MultipartFile suratProposal,
+                                            HttpServletResponse response) {
         try {
-            if (proposalWorkshop == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+
             log.info("uploadDirectory:: " + uploadDirectory);
             String fileName = StringUtils.cleanPath(suratProposal.getOriginalFilename());
             String filePath = Paths.get(uploadDirectory, fileName).toString();
@@ -72,28 +80,35 @@ public class ProposalService {
 
             log.info("nim: " + proposalWorkshop.getNim());
             log.info("nama: " + proposalWorkshop.getNama());
-            log.info("Tahun Kepngurusan: " + proposalWorkshop.getTahunKepengurusan());
-            log.info("judulWorkshop: " + proposalWorkshop.getJudulWorkshop());
-            log.info("pembicara: " + proposalWorkshop.getPembicara());
-            log.info("tanggalWorkshop: " + proposalWorkshop.getTanggalWorkshop());
+            log.info("Tahun Kepengurusan: " + proposalWorkshop.getTahunKepengurusan());
             log.info("suratProposalWorkshop: " + fileName);
 
-            ProposalWorkshop workshop = ProposalWorkshop.builder()
-                    .nim(proposalWorkshop.getNim())
-                    .pembicara(proposalWorkshop.getPembicara())
-                    .judulWorkshop(proposalWorkshop.getJudulWorkshop())
-                    .nama(proposalWorkshop.getNama())
-                    .tahunKepengurusan(proposalWorkshop.getTahunKepengurusan())
-                    .tanggalWorkshop(proposalWorkshop.getTanggalWorkshop())
+//            Workshop work = Workshop.builder()
+//                    .judulWorkshop(workshop.getJudulWorkshop())
+//                    .pembicara(workshop.getPembicara())
+//                    .tanggalWorkshop(workshop.getTanggalWorkshop())
+//                    .createdDate(LocalDateTime.now())
+//                    .build();
+//            workshopRepository.save(work);
+
+            ProposalWorkshop proposal = ProposalWorkshop.builder()
                     .proposalByte(suratProposal.getBytes())
                     .type(suratProposal.getContentType())
                     .docName(fileName)
+                    .createdDate(LocalDateTime.now())
                     .build();
-            propWorkshopRepository.save(workshop);
 
-            if (workshop != null) {
+            Optional<ProposalWorkshop> props = workshopRepository.findById(workshopId).map(workshop -> {
+                proposalWorkshop.setProposalByte(proposal.getProposalByte());
+                proposalWorkshop.setDocName(proposal.getDocName());
+                proposalWorkshop.setCreatedDate(proposal.getCreatedDate());
+                proposalWorkshop.setType(proposal.getType());
+                proposalWorkshop.setWorkshop(workshop);
+                return propWorkshopRepository.save(proposalWorkshop);
+            });
+            if (props.isPresent()) {
                 response.sendRedirect("/himatika/proposal-workshop");
-                return new ResponseEntity<>("File uploaded successfully: " + suratProposal.getOriginalFilename(), HttpStatus.OK);
+                return new ResponseEntity<>("Berhasil Upload Proposal", HttpStatus.OK);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,35 +116,42 @@ public class ProposalService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         log.info("Workshop Berhasil Dibuat");
-        return new ResponseEntity<>("Berhasil Upload Workshop Dengan Judul " + proposalWorkshop.getJudulWorkshop(), HttpStatus.OK);
+        return new ResponseEntity<>("Berhasil Upload Proposal Workshop", HttpStatus.OK);
     }
 
-    public ModelAndView formProposal(ProposalWorkshop proposalWorkshop) {
+    public ModelAndView formProposal(Long workshopId, ProposalWorkshop proposalWorkshop) {
         ModelAndView mav = new ModelAndView();
-        ProposalWorkshop propWorkshop = new ProposalWorkshop();
-        mav.getModelMap().addAttribute("propWorkshop", propWorkshop);
+        ProposalWorkshop proposalInput = new ProposalWorkshop();
+
+        proposalInput.setNim(proposalWorkshop.getNim());
+        proposalInput.setNama(proposalWorkshop.getNama());
+        proposalInput.setTahunKepengurusan(proposalWorkshop.getTahunKepengurusan());
+        proposalInput.setSuratProposal(proposalWorkshop.getSuratProposal());
+
+        mav.getModelMap().addAttribute("proposalInput", proposalInput);
         mav.setViewName("formProposal");
         return mav;
     }
 
-    public ResponseEntity<byte[]> downloadProposal(String docName) {
-        Optional<ProposalWorkshop> file = propWorkshopRepository.findByDocName(docName);
+    public ResponseEntity<byte[]> downloadProposal(Long id,
+                                                   String docName) {
+        ProposalWorkshop file = propWorkshopRepository.findByDocName(id, docName);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + docName)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(file.get().getProposalByte().length)
-                .body(file.get().getProposalByte());
+                .contentLength(file.getProposalByte().length)
+                .body(file.getProposalByte());
     }
 
-    public ResponseEntity<?> deletedProposal(Long id,
-                                             String judulWorkshop,
-                                             String fileName,
-                                             HttpServletResponse response) {
+    public ResponseEntity<?> deletedProposal(
+            Long workshopId,
+            String fileName,
+            HttpServletResponse response) {
         String path = uploadDirectory + "/" + fileName;
         File file = new File(path);
         try {
-            if (judulWorkshop != null) {
-                propWorkshopRepository.deleteByJudulWorkshop(id, judulWorkshop);
+            if (workshopId != null) {
+                propWorkshopRepository.deleteByWorkshopId(workshopId);
                 String pathFile = uploadDirectory + "/" + fileName;
                 System.out.println("Path=" + pathFile);
                 File fileToDelete = new File(pathFile);
@@ -150,32 +172,32 @@ public class ProposalService {
         return new ResponseEntity<>("Berhasil Menghapus Data", HttpStatus.OK);
     }
 
-    public ModelAndView editProposal(Long id) {
+    public ModelAndView editProposal(Long workshopId) {
         ModelAndView mav = new ModelAndView();
-        ProposalWorkshop propWorkshop = propWorkshopRepository.getById(id);
+//        Workshop getId = workshopRepository.getReferenceById(workshopId);
+        ProposalWorkshop propWorkshop = propWorkshopRepository.getByWorkshop(workshopId);
         mav.getModelMap().addAttribute("propWorkshop", propWorkshop);
         mav.setViewName("editProposal");
         return mav;
     }
 
-    public @ResponseBody ResponseEntity<?> updateProposal(Long id,
+    public @ResponseBody ResponseEntity<?> updateProposal(Long workshopId,
+                                                          Long id,
                                                           MultipartFile suratProposal,
                                                           HttpServletResponse response,
                                                           ProposalWorkshop proposalWorkshop) throws IOException {
         ProposalWorkshop propWorkshop = propWorkshopRepository.getById(id);
+        Workshop getId = workshopRepository.getReferenceById(workshopId);
 
         String fileName = StringUtils.cleanPath(suratProposal.getOriginalFilename());
 
         propWorkshop.setNim(proposalWorkshop.getNim());
-        propWorkshop.setPembicara(proposalWorkshop.getPembicara());
-        propWorkshop.setJudulWorkshop(proposalWorkshop.getJudulWorkshop());
         propWorkshop.setNama(proposalWorkshop.getNama());
         propWorkshop.setTahunKepengurusan(proposalWorkshop.getTahunKepengurusan());
-        propWorkshop.setTanggalWorkshop(proposalWorkshop.getTanggalWorkshop());
         propWorkshop.setProposalByte(suratProposal.getBytes());
         propWorkshop.setType(suratProposal.getContentType());
-        propWorkshop.setUpdatedDate(LocalDateTime.now());
         propWorkshop.setDocName(fileName);
+        propWorkshop.setUpdatedDate(LocalDateTime.now());
 
         propWorkshopRepository.save(propWorkshop);
         response.sendRedirect("/himatika/proposal-workshop");

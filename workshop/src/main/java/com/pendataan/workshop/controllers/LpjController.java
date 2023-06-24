@@ -26,47 +26,56 @@ public class LpjController {
         return lpjService.getAllLpj();
     }
 
-    @GetMapping("/lpj-workshop/input")
-    public ModelAndView formInputLpj(@ModelAttribute("lpjWorkshop") LpjWorkshop lpjWorkshop)
-            throws IOException {
-        return lpjService.formLpj(lpjWorkshop);
+    @GetMapping(path = "/lpj-workshop/{workshop_id}")
+    public ModelAndView showLpj(@PathVariable() Long workshopId) {
+        return lpjService.getLpj(workshopId);
     }
 
-    @PostMapping(path = "/lpj-workshop/input/upload")
-    public @ResponseBody ResponseEntity<?> uploadlpj(LpjWorkshop lpjWorkshop,
+    @GetMapping("/lpj-workshop/{workshop_id}/input")
+    public ModelAndView formInputLpj(@PathVariable("workshop_id") Long workshopId,
+                                     @ModelAttribute("lpjWorkshop") LpjWorkshop lpjWorkshop)
+            throws IOException {
+        return lpjService.formLpj(workshopId, lpjWorkshop);
+    }
+
+    @PostMapping(path = "/lpj-workshop/{workshop_id}/input/upload")
+    public @ResponseBody ResponseEntity<?> uploadlpj(@PathVariable("workshop_id") Long workshopId,
+                                                     LpjWorkshop lpjWorkshop,
                                                      @RequestParam("suratLpj") MultipartFile suratLpj,
                                                      HttpServletResponse response)
             throws IOException {
-        return lpjService.uploadlpj(lpjWorkshop, suratLpj, response);
+        return lpjService.uploadlpj(workshopId, lpjWorkshop, suratLpj, response);
     }
 
-    @GetMapping(path = "/lpj-workshop/{docName}", produces = "application/pdf")
-    public ResponseEntity<?> downloadFile(@PathVariable String docName) throws IOException {
+    @GetMapping(path = "/lpj-workshop/{id}/download/{docName}")
+    public ResponseEntity<?> downloadFile(@PathVariable("id") Long id,
+                                          @PathVariable String docName) throws IOException {
 //        ResponseEntity<Resource> fileLpj = lpjService.downloadlpj(docName);
 //        return ResponseEntity.status(HttpStatus.OK)
 //                .contentType(MediaType.APPLICATION_PDF)
 //                .body(fileLpj.getBody());
-        return lpjService.downloadlpj(docName);
+        return lpjService.downloadlpj(id, docName);
     }
 
-    @GetMapping(path = "/lpj-workshop/deleteWorkshop/{id}/{judulWorkshop}")
+    @GetMapping(path = "/lpj-workshop/{workshop_id}/deleteLpj")
     public @ResponseBody ResponseEntity<?> deleteLpj(@PathVariable("id") Long id,
-                                                     @PathVariable("judulWorkshop") String judulWorkshop,
+                                                     @PathVariable("workshop_id") Long workshopId,
                                                      String docName,
                                                      HttpServletResponse response) {
-        return lpjService.deletedLpj(id, judulWorkshop, docName, response);
+        return lpjService.deletedLpj(id, workshopId, docName, response);
     }
 
-    @GetMapping(path = "/lpj-workshop/editLpj/{id}")
-    public ModelAndView editLpj(@PathVariable("id") Long id) {
-        return lpjService.editLpj(id);
+    @GetMapping(path = "/lpj-workshop/{workshop_id}/editLpj")
+    public ModelAndView editLpj(@PathVariable("workshop_id") Long workshopId) {
+        return lpjService.editLpj(workshopId);
     }
 
-    @PostMapping(path = "/lpj-workshop/{id}")
-    public @ResponseBody ResponseEntity<?> updateLpj(@PathVariable("id") Long id,
+    @PostMapping(path = "/lpj-workshop/{workshop_id}/updateLpj/{id}")
+    public @ResponseBody ResponseEntity<?> updateLpj(@PathVariable("workshop_id") Long workshopId,
+                                                     @PathVariable("id") Long id,
                                                      @RequestParam("suratLpj") MultipartFile suratLpj,
                                                      HttpServletResponse response,
                                                      LpjWorkshop lpjWorkshop) throws IOException {
-        return lpjService.updateLpj(id, suratLpj, response, lpjWorkshop);
+        return lpjService.updateLpj(workshopId, id, suratLpj, response, lpjWorkshop);
     }
 }

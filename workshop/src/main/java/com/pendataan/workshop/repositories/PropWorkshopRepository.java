@@ -8,19 +8,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @Transactional
 public interface PropWorkshopRepository extends JpaRepository<ProposalWorkshop, Long> {
 
-    Optional<ProposalWorkshop> findByDocName(String docName);
     @Transactional
     @Modifying
-    @Query("delete from ProposalWorkshop p where p. id like ?1 and p. judulWorkshop like ?2")
-    void deleteByJudulWorkshop(Long id, String judulWorkshop);
+    @Query("select p from ProposalWorkshop p where p. id like ?1 and p. docName like ?2")
+    ProposalWorkshop findByDocName(Long id, String docName);
+//    @Transactional
+//    @Modifying
+//    @Query("delete from ProposalWorkshop p where p. id like ?1 and p. workshopId like ?2")
+    void deleteByWorkshopId(Long workshopId);
 
-    @Transactional
-    List<ProposalWorkshop> getByJudulWorkshop(String judulWorkshop);
+//    @Transactional
+//    @Modifying
+//    @Query("select p from ProposalWorkshop p where p. id like ?1 and p. workshopId like ?2")
+    ProposalWorkshop getByWorkshop(Long workshopId);
 }

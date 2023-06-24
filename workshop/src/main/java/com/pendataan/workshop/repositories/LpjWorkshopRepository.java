@@ -13,9 +13,17 @@ import java.util.Optional;
 @Transactional
 public interface LpjWorkshopRepository extends JpaRepository<LpjWorkshop, Long> {
 
-    Optional<LpjWorkshop> findByDocName(String docName);
     @Transactional
     @Modifying
-    @Query("delete from LpjWorkshop p where p. id like ?1 and p. judulWorkshop like ?2")
-    void deleteByJudulWorkshop(Long id, String judulWorkshop);
+    @Query("select l from LpjWorkshop l where l. id like ?1 and l. docName like ?2")
+    Optional<LpjWorkshop> findByDocName(Long id, String docName);
+//    @Transactional
+//    @Modifying
+//    @Query("delete from LpjWorkshop l where l. id like ?1 and l. workshopId like ?2")
+    void deleteByWorkshopId(Long workshopId);
+
+//    @Transactional
+//    @Modifying
+//    @Query("select l from LpjWorkshop l where l. id like ?1 and l. workshopId like ?2")
+    LpjWorkshop getByWorkshopId(Long workshopId);
 }

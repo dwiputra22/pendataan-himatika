@@ -19,24 +19,14 @@ public class ProposalWorkshop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Masukkan Nim Anda!")
     @Column(name = "nim")
-    private String nim;
+    private Integer nim;
     @NotBlank(message = "Masukkan Nama Anda!")
     @Column(name = "nama")
     private String nama;
     @NotBlank(message = "Masukkan Tahun Kepengurusan Anda!")
     @Column(name = "thnKepengurusan")
     private String tahunKepengurusan;
-    @NotBlank(message = "Masukkan Nama Pembicara!")
-    @Column(name = "pembicara")
-    private String pembicara;
-    @NotBlank(message = "Masukkan Judul Workshop!")
-    @Column(name = "judul_workshop")
-    private String judulWorkshop;
-    @Column(name = "tgl_workshop")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime tanggalWorkshop;
     @Transient
     private MultipartFile suratProposal;
     @Lob
@@ -45,14 +35,20 @@ public class ProposalWorkshop {
     private String type;
     @Column(name = "docName")
     private String docName;
+    @Column(name = "created_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime createdDate;
     @Column(name = "updatedDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime updatedDate;
+    @ManyToOne
+    @JoinColumn(name = "workshop_id")
+    private Workshop workshop;
 
     @Override
     public String toString() {
 
         return "Proposal = [id=" + id + ", nim=" + nim + ", nama=" + nama  + ", Tahun Kepengurusan=" + tahunKepengurusan
-                + ", pembicara=" + pembicara + ", judulWorkshop=" + judulWorkshop + ", tanggalWorkshop=" + tanggalWorkshop
                 + ", suratProposal=" + suratProposal + ", type=" + type + ", docName=" + docName + "]";
     }
 }

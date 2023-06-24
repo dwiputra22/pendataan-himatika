@@ -35,4 +35,19 @@ public class DokumentasiController {
             throws IOException {
         return dokumentasiService.upload(dokumentasiWorkshop, fileDokumentasi, judulWorkshop, response);
     }
+
+    @RequestMapping("/dokumentasi/{judulWorkshop}/edit-dokumentasi")
+    public ModelAndView editDokumentasi(@PathVariable("judulWorkshop") String judulWorkshop) {
+        return dokumentasiService.edit(judulWorkshop);
+    }
+
+    @RequestMapping("/dokumentasi/{judulWorkshop}/edit-dokumentasi/update")
+    public ResponseEntity<?> updateDokumentasi() {
+        return dokumentasiService.update();
+    }
+
+    @RequestMapping("/dokumentasi/{judulWorkshop}/delete-dokumentasi")
+    public ResponseEntity<?> deleteDokumentasi() {
+        return dokumentasiService.delete();
+    }
 }

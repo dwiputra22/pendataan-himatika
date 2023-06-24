@@ -19,8 +19,8 @@
       </div>
     </div>
     <form
-            th:object="${propWorkshop}"
-            th:action="@{/himatika/proposal-workshop/input/upload}"
+            th:action="@{/himatika/proposal-workshop/{workshopId}/input/upload(workshopId=${workshopId})}"
+            th:object="${proposalInput}"
             method="post"
             class="border-teal p-4 border-t-12 bg-white mb-6"
             enctype="multipart/form-data">
@@ -30,7 +30,7 @@
                th:errorClass="is-invalid"
                class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                placeholder="Masukkan Nim Anda">
-        <p th:errors = "*{nim}" class="invalid-feedback"
+        <p th:errors = "${nim}" class="invalid-feedback"
            th:if="${#fields.hasErrors('nim')}"></p>
       </div>
       <div class="mb-4">
@@ -52,36 +52,10 @@
            th:if="${#fields.hasErrors('tahunKepengurusan')}"></p>
       </div>
       <div class="mb-4">
-        <label for="judulWorkshop" class="font-bold text-lg block mb-2">Judul Workshop</label>
-        <input id="judulWorkshop" th:value="*{judulWorkshop}" type="text" name="judulWorkshop"
-               th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan Judul Workshop">
-        <p th:errors = "*{judulWorkshop}" class="invalid-feedback"
-           th:if="${#fields.hasErrors('judulWorkshop')}"></p>
-      </div>
-      <div class="mb-4">
-        <label for="pembicara" class="font-bold text-lg block mb-2">Pembicara</label>
-        <input id="pembicara" th:value="*{pembicara}" type="text" name="pembicara"
-               th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan Pembicara">
-        <p th:errors = "*{pembicara}" class="invalid-feedback"
-           th:if="${#fields.hasErrors('pembicara')}"></p>
-      </div>
-      <div class="mb-4">
-        <label for="tanggalWorkshop" class="font-bold text-lg block mb-2">Tanggal Workshop</label>
-        <input id="tanggalWorkshop" th:value="*{tanggalWorkshop}" type="datetime-local" name="tanggalWorkshop"
-               th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan Tanggal Workshop">
-        <p th:errors = "*{tanggalWorkshop}" class="invalid-feedback"
-           th:if="${#fields.hasErrors('tanggalWorkshop')}"></p>
-      </div>
-      <div class="mb-4">
         <label for="suratProposal" class="font-bold text-lg block mb-2">Surat Proposal</label>
         <input id="suratProposal"
                type="file" name="suratProposal"
+               th:value="*{suratProposal}"
                th:errorClass="is-invalid"
                class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                placeholder="Masukkan File Proposal Workshop">

@@ -58,13 +58,11 @@ public class DokumentasiService {
                 stream.close();
 
                 try {
-                    log.info("Judul Workshop: " + dokumentasiWorkshop.getJudulWorkshop());
                     log.info("Tanggal Dokumentasi: " + dokumentasiWorkshop.getTanggalDokumentasi());
                     log.info("Type File: " + dokumentasiWorkshop.getType());
                     log.info("Nama File: " + dokumentasiWorkshop.getDocName());
 
                     DokumentasiWorkshop dokumen = DokumentasiWorkshop.builder()
-                            .judulWorkshop(judulWorkshop)
                             .tanggalDokumentasi(dokumentasiWorkshop.getTanggalDokumentasi())
                             .dokumentasiByte(dokumentasiWorkshop.getDokumentasiByte())
                             .type(dokumentasiWorkshop.getType())
@@ -86,9 +84,21 @@ public class DokumentasiService {
                 return new ResponseEntity<>( "Gagal Mengupload File ke Local",HttpStatus.BAD_REQUEST);
             }
             log.info("Dokumentasi Berhasil Dibuat");
-            return new ResponseEntity<>("Berhasil Upload Dokumentasi Dengan Judul " + dokumentasiWorkshop.getJudulWorkshop(), HttpStatus.OK);
+            return new ResponseEntity<>("Berhasil Upload Dokumentasi Workshop", HttpStatus.OK);
         }
     }
 
+    public ModelAndView edit(String judulWorkshop) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("");
+        return mav;
+    }
 
+    public ResponseEntity<?> update() {
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> delete() {
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 }

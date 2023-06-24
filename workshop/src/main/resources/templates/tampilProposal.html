@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Proposal Workshop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0faddc1af8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="/himatika">Home</a>
+</nav>
+
+<div class="container my-5 col-md-8">
+    <table class="table  table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Nim</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Tahun kepengurusan</th>
+            <th scope="col">Workshop Id</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Proposal</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p :${proposal}">
+            <td th:text="${p.nim}"></td>
+            <td th:text="${p.nama}"></td>
+            <td th:text="${p.tahunKepengurusan}"></td>
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.createdDate}"></td>
+            <td th:text="${p.docName}"></td>
+            <td><a class="btn btn-secondary btn-sm" th:href="@{/himatika/{workshopId}/proposal-workshop/{docName}(docName=${p.docName}, workshopId=${p.id})}">Download File</a>
+                <a style="color:blue" th:href="@{/himatika/proposal-workshop/{workshopId}/editProposal/(workshopId=${p.id})}"><i class="fa-solid fa-pen-to-square ms-4"></i></a>
+                <a style="color:red" th:href="@{/himatika/proposal-workshop/{workshopId}/deleteProposal/{id}(id=${p.id}, workshopId=${p.workshop})}"><i class="fa-solid fa-trash ms-4"></i></a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
