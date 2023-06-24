@@ -36,9 +36,9 @@
             <td th:text="${p.id}"></td>
             <td th:text="${p.createdDate}"></td>
             <td th:text="${p.docName}"></td>
-            <td><a class="btn btn-secondary btn-sm" th:href="@{/himatika/{workshopId}/proposal-workshop/{docName}(docName=${p.docName}, workshopId=${p.id})}">Download File</a>
-                <a style="color:blue" th:href="@{/himatika/proposal-workshop/{workshopId}/editProposal/(workshopId=${p.id})}"><i class="fa-solid fa-pen-to-square ms-4"></i></a>
-                <a style="color:red" th:href="@{/himatika/proposal-workshop/{workshopId}/deleteProposal/{id}(id=${p.id}, workshopId=${p.workshop})}"><i class="fa-solid fa-trash ms-4"></i></a>
+            <td><a class="btn btn-secondary btn-sm" th:href="@{/himatika/proposal-workshop/{id}/download/{docName} (id=${p.id}, docName=${p.docName})}">Download File</a>
+                <a style="color:blue" th:href="@{/himatika/proposal-workshop/editProposal/{id} (id=${p.id})}"><i class="fa-solid fa-pen-to-square ms-4"></i></a>
+                <a style="color:red" th:href="@{/himatika/proposal-workshop/deleteProposal/{id} (id=${p.id})}"><i class="fa-solid fa-trash ms-4"></i></a>
             </td>
         </tr>
 

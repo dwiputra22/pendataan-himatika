@@ -48,7 +48,7 @@ public class LpjService {
 
     public ModelAndView getLpj(Long workshopId) {
         ModelAndView mav = new ModelAndView();
-        LpjWorkshop lpj = lpjWorkshopRepository.getReferenceById(workshopId);
+        LpjWorkshop lpj = lpjWorkshopRepository.getById(workshopId);
         mav.getModelMap().addAttribute("lpj", lpj);
         mav.setViewName("tampilLpj");
         return mav;
@@ -58,13 +58,10 @@ public class LpjService {
         ModelAndView mav = new ModelAndView();
         LpjWorkshop lpjInput = new LpjWorkshop();
 
-        Workshop getId = workshopRepository.getReferenceById(workshopId);
-
         lpjInput.setNim(lpjWorkshop.getNim());
         lpjInput.setNama(lpjWorkshop.getNama());
         lpjInput.setTahunKepengurusan(lpjWorkshop.getTahunKepengurusan());
         lpjInput.setSuratLpj(lpjWorkshop.getSuratLpj());
-        lpjInput.setWorkshop(getId);
 
         mav.getModelMap().addAttribute("lpjInput", lpjInput);
         mav.setViewName("formLpj");
@@ -79,7 +76,6 @@ public class LpjService {
             if (lpjWorkshop == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            Workshop getId = workshopRepository.getReferenceById(workshopId);
             log.info("uploadDirectory:: " + uploadDirectory);
             String fileName = StringUtils.cleanPath(suratLpj.getOriginalFilename());
             Path filePath = Paths.get(uploadDirectory, fileName);
@@ -115,13 +111,19 @@ public class LpjService {
                     .type(suratLpj.getContentType())
                     .docName(fileName)
                     .createdDate(LocalDateTime.now())
-                    .workshop(getId)
                     .build();
-            lpjWorkshopRepository.save(lpj);
 
-            if (lpj != null) {
+            Optional<LpjWorkshop> lpjWork = workshopRepository.findById(workshopId).map(workshop -> {
+                lpjWorkshop.setLpjByte(lpj.getLpjByte());
+                lpjWorkshop.setDocName(lpj.getDocName());
+                lpjWorkshop.setType(lpj.getType());
+                lpjWorkshop.setCreatedDate(lpj.getCreatedDate());
+                lpjWorkshop.setWorkshop(workshop);
+                return lpjWorkshopRepository.save(lpjWorkshop);
+            });
+            if (lpjWork.isPresent()) {
                 response.sendRedirect("/himatika/lpj-workshop");
-                return new ResponseEntity<>("File uploaded successfully: " + suratLpj.getOriginalFilename(), HttpStatus.OK);
+                return new ResponseEntity<>("Berhasil Upload Lpj Workshop", HttpStatus.OK);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,14 +152,13 @@ public class LpjService {
     }
 
     public ResponseEntity<?> deletedLpj(Long id,
-                                        Long workshopId,
                                         String fileName,
                                         HttpServletResponse response) {
         String path = uploadDirectory + "/" + fileName;
         File file = new File(path);
         try {
-            if (workshopId != null) {
-                lpjWorkshopRepository.deleteByWorkshopId(workshopId);
+            if (id != null) {
+                lpjWorkshopRepository.deleteByWorkshopId(id);
                 String pathFile = uploadDirectory + "/" + fileName;
                 System.out.println("Path=" + pathFile);
                 File fileToDelete = new File(pathFile);
@@ -178,22 +179,20 @@ public class LpjService {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
-    public ModelAndView editLpj(Long workshopId) {
+    public ModelAndView editLpj(Long id) {
         ModelAndView mav = new ModelAndView();
 //        Workshop getId = workshopRepository.getReferenceById(workshopId);
-        LpjWorkshop lpjInput = lpjWorkshopRepository.getByWorkshopId(workshopId);
+        LpjWorkshop lpjInput = lpjWorkshopRepository.getById(id);
         mav.getModelMap().addAttribute("lpjInput", lpjInput);
         mav.setViewName("editLpj");
         return mav;
     }
 
-    public @ResponseBody ResponseEntity<?> updateLpj(Long workshopId,
-                                                     Long id,
+    public @ResponseBody ResponseEntity<?> updateLpj(Long id,
                                                      MultipartFile suratLpj,
                                                      HttpServletResponse response,
                                                      LpjWorkshop lpjWorkshop) throws IOException {
         LpjWorkshop lpj = lpjWorkshopRepository.getById(id);
-        Workshop getId = workshopRepository.getReferenceById(workshopId);
 
         String fileName = StringUtils.cleanPath(suratLpj.getOriginalFilename());
 
@@ -204,7 +203,6 @@ public class LpjService {
         lpj.setType(suratLpj.getContentType());
         lpj.setDocName(fileName);
         lpj.setUpdatedDate(LocalDateTime.now());
-        lpj.setWorkshop(getId);
 
         lpjWorkshopRepository.save(lpj);
         response.sendRedirect("/himatika/lpj-workshop");

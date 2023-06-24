@@ -26,20 +26,20 @@ public class LpjController {
         return lpjService.getAllLpj();
     }
 
-    @GetMapping(path = "/lpj-workshop/{workshop_id}")
-    public ModelAndView showLpj(@PathVariable() Long workshopId) {
+    @GetMapping(path = "/lpj-workshop/{workshopid}")
+    public ModelAndView showLpj(@PathVariable("workshopId") Long workshopId) {
         return lpjService.getLpj(workshopId);
     }
 
-    @GetMapping("/lpj-workshop/{workshop_id}/input")
-    public ModelAndView formInputLpj(@PathVariable("workshop_id") Long workshopId,
+    @GetMapping("/lpj-workshop/{workshopId}/input")
+    public ModelAndView formInputLpj(@PathVariable("workshopId") Long workshopId,
                                      @ModelAttribute("lpjWorkshop") LpjWorkshop lpjWorkshop)
             throws IOException {
         return lpjService.formLpj(workshopId, lpjWorkshop);
     }
 
-    @PostMapping(path = "/lpj-workshop/{workshop_id}/input/upload")
-    public @ResponseBody ResponseEntity<?> uploadlpj(@PathVariable("workshop_id") Long workshopId,
+    @PostMapping(path = "/lpj-workshop/{workshopId}/input/upload")
+    public @ResponseBody ResponseEntity<?> uploadlpj(@PathVariable("workshopId") Long workshopId,
                                                      LpjWorkshop lpjWorkshop,
                                                      @RequestParam("suratLpj") MultipartFile suratLpj,
                                                      HttpServletResponse response)
@@ -57,25 +57,23 @@ public class LpjController {
         return lpjService.downloadlpj(id, docName);
     }
 
-    @GetMapping(path = "/lpj-workshop/{workshop_id}/deleteLpj")
+    @GetMapping(path = "/lpj-workshop/deleteLpj/{id}")
     public @ResponseBody ResponseEntity<?> deleteLpj(@PathVariable("id") Long id,
-                                                     @PathVariable("workshop_id") Long workshopId,
                                                      String docName,
                                                      HttpServletResponse response) {
-        return lpjService.deletedLpj(id, workshopId, docName, response);
+        return lpjService.deletedLpj(id, docName, response);
     }
 
-    @GetMapping(path = "/lpj-workshop/{workshop_id}/editLpj")
-    public ModelAndView editLpj(@PathVariable("workshop_id") Long workshopId) {
-        return lpjService.editLpj(workshopId);
+    @GetMapping(path = "/lpj-workshop/editLpj/{id}")
+    public ModelAndView editLpj(@PathVariable("id") Long id) {
+        return lpjService.editLpj(id);
     }
 
-    @PostMapping(path = "/lpj-workshop/{workshop_id}/updateLpj/{id}")
-    public @ResponseBody ResponseEntity<?> updateLpj(@PathVariable("workshop_id") Long workshopId,
-                                                     @PathVariable("id") Long id,
+    @PostMapping(path = "/lpj-workshop/editLpj/{id}/update")
+    public @ResponseBody ResponseEntity<?> updateLpj(@PathVariable("id") Long id,
                                                      @RequestParam("suratLpj") MultipartFile suratLpj,
                                                      HttpServletResponse response,
                                                      LpjWorkshop lpjWorkshop) throws IOException {
-        return lpjService.updateLpj(workshopId, id, suratLpj, response, lpjWorkshop);
+        return lpjService.updateLpj(id, suratLpj, response, lpjWorkshop);
     }
 }

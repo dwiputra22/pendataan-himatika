@@ -41,7 +41,7 @@ public class ProposalWorkshop {
     @Column(name = "updatedDate")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime updatedDate;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "workshop_id")
     private Workshop workshop;
 

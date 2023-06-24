@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 @Transactional
 public interface PropWorkshopRepository extends JpaRepository<ProposalWorkshop, Long> {
@@ -15,7 +17,7 @@ public interface PropWorkshopRepository extends JpaRepository<ProposalWorkshop, 
     @Transactional
     @Modifying
     @Query("select p from ProposalWorkshop p where p. id like ?1 and p. docName like ?2")
-    ProposalWorkshop findByDocName(Long id, String docName);
+    Optional<ProposalWorkshop> findByDocName(Long id, String docName);
 //    @Transactional
 //    @Modifying
 //    @Query("delete from ProposalWorkshop p where p. id like ?1 and p. workshopId like ?2")

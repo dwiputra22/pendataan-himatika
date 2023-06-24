@@ -21,33 +21,59 @@ public class DokumentasiController {
     private final DokumentasiService dokumentasiService;
     private static final Logger log = LoggerFactory.getLogger(DokumentasiController.class);
 
-    @GetMapping("/dokumentasi/{judulWorkshop}/input-dokumentasi")
-    public ModelAndView formProposal(@PathVariable("judulWorkshop") String judulWorkshop)
-            throws IOException {
-        return dokumentasiService.formDokumentasi(judulWorkshop);
+
+    @GetMapping(path = "/dokumentasi")
+    public ModelAndView showAllDokumentasi() {
+        return dokumentasiService.getAllDokumentasi();
     }
 
-    @RequestMapping("/dokumentasi/{judulWorkshop}/input-dokumentasi/upload")
+    @GetMapping(path = "/dokumentasi/{workshopId}")
+    public ModelAndView showProposal(@PathVariable("workshopId") Long workshopId) {
+        return dokumentasiService.getDokumentasi(workshopId);
+    }
+
+    @GetMapping("/dokumentasi/{workshopId}/input-dokumentasi")
+    public ModelAndView formProposal(@PathVariable("workshopId") Long workshopId)
+            throws IOException {
+        return dokumentasiService.formDokumentasi(workshopId);
+    }
+
+    @RequestMapping("/dokumentasi/{workshopId}/input-dokumentasi/upload")
     public ResponseEntity<?> uploadDokumen(DokumentasiWorkshop dokumentasiWorkshop,
                                            @RequestParam("file") MultipartFile fileDokumentasi,
-                                           @PathVariable("judulWorkshop") String judulWorkshop,
+                                           @PathVariable("workshopId") Long workshopId,
                                            HttpServletResponse response)
             throws IOException {
-        return dokumentasiService.upload(dokumentasiWorkshop, fileDokumentasi, judulWorkshop, response);
+        return dokumentasiService.upload(dokumentasiWorkshop, fileDokumentasi, workshopId, response);
     }
 
-    @RequestMapping("/dokumentasi/{judulWorkshop}/edit-dokumentasi")
-    public ModelAndView editDokumentasi(@PathVariable("judulWorkshop") String judulWorkshop) {
-        return dokumentasiService.edit(judulWorkshop);
+    @GetMapping(path = "/dokumentasi/{id}/download/{docName}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("id") Long id,
+                                               @PathVariable("docName") String docName) {
+//        byte[] fileProposal = proposalService.downloadProposal(docName);
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .contentType(MediaType.valueOf("application/pdf"))
+//                .body(fileProposal);
+        return dokumentasiService.downloadDokumentasi(id, docName);
     }
 
-    @RequestMapping("/dokumentasi/{judulWorkshop}/edit-dokumentasi/update")
-    public ResponseEntity<?> updateDokumentasi() {
-        return dokumentasiService.update();
+    @RequestMapping("/dokumentasi/edit-dokumentasi/{id}")
+    public ModelAndView editDokumentasi(@PathVariable("id") Long id) {
+        return dokumentasiService.edit(id);
     }
 
-    @RequestMapping("/dokumentasi/{judulWorkshop}/delete-dokumentasi")
-    public ResponseEntity<?> deleteDokumentasi() {
-        return dokumentasiService.delete();
+    @RequestMapping("/dokumentasi/edit-dokumentasi/{id}/update")
+    public ResponseEntity<?> updateDokumentasi(@PathVariable("id") Long id,
+                                               DokumentasiWorkshop dok,
+                                               @RequestParam("file") MultipartFile fileDokumentasi,
+                                               HttpServletResponse response) throws IOException {
+        return dokumentasiService.update(id, dok, fileDokumentasi, response);
+    }
+
+    @RequestMapping("/dokumentasi/delete-dokumentasi/{id}")
+    public ResponseEntity<?> deleteDokumentasi(@PathVariable("id") Long id,
+                                               String fileName,
+                                               HttpServletResponse response) {
+        return dokumentasiService.delete(id, fileName, response);
     }
 }

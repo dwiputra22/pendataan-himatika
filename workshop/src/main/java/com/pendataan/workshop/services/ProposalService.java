@@ -57,7 +57,6 @@ public class ProposalService {
                                             MultipartFile suratProposal,
                                             HttpServletResponse response) {
         try {
-
             log.info("uploadDirectory:: " + uploadDirectory);
             String fileName = StringUtils.cleanPath(suratProposal.getOriginalFilename());
             String filePath = Paths.get(uploadDirectory, fileName).toString();
@@ -98,7 +97,7 @@ public class ProposalService {
                     .createdDate(LocalDateTime.now())
                     .build();
 
-            Optional<ProposalWorkshop> props = workshopRepository.findById(workshopId).map(workshop -> {
+            Optional<ProposalWorkshop> propWorkshop = workshopRepository.findById(workshopId).map(workshop -> {
                 proposalWorkshop.setProposalByte(proposal.getProposalByte());
                 proposalWorkshop.setDocName(proposal.getDocName());
                 proposalWorkshop.setCreatedDate(proposal.getCreatedDate());
@@ -106,7 +105,7 @@ public class ProposalService {
                 proposalWorkshop.setWorkshop(workshop);
                 return propWorkshopRepository.save(proposalWorkshop);
             });
-            if (props.isPresent()) {
+            if (propWorkshop.isPresent()) {
                 response.sendRedirect("/himatika/proposal-workshop");
                 return new ResponseEntity<>("Berhasil Upload Proposal", HttpStatus.OK);
             }
@@ -133,25 +132,23 @@ public class ProposalService {
         return mav;
     }
 
-    public ResponseEntity<byte[]> downloadProposal(Long id,
-                                                   String docName) {
-        ProposalWorkshop file = propWorkshopRepository.findByDocName(id, docName);
+    public ResponseEntity<byte[]> downloadProposal(Long id, String docName) {
+        Optional<ProposalWorkshop> file = propWorkshopRepository.findByDocName(id, docName);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + docName)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(file.getProposalByte().length)
-                .body(file.getProposalByte());
+                .contentLength(file.get().getProposalByte().length)
+                .body(file.get().getProposalByte());
     }
 
-    public ResponseEntity<?> deletedProposal(
-            Long workshopId,
-            String fileName,
-            HttpServletResponse response) {
+    public ResponseEntity<?> deletedProposal(Long id,
+                                             String fileName,
+                                             HttpServletResponse response) {
         String path = uploadDirectory + "/" + fileName;
         File file = new File(path);
         try {
-            if (workshopId != null) {
-                propWorkshopRepository.deleteByWorkshopId(workshopId);
+            if (id != null) {
+                propWorkshopRepository.deleteByWorkshopId(id);
                 String pathFile = uploadDirectory + "/" + fileName;
                 System.out.println("Path=" + pathFile);
                 File fileToDelete = new File(pathFile);
@@ -172,22 +169,21 @@ public class ProposalService {
         return new ResponseEntity<>("Berhasil Menghapus Data", HttpStatus.OK);
     }
 
-    public ModelAndView editProposal(Long workshopId) {
+    public ModelAndView editProposal(Long id) {
         ModelAndView mav = new ModelAndView();
 //        Workshop getId = workshopRepository.getReferenceById(workshopId);
-        ProposalWorkshop propWorkshop = propWorkshopRepository.getByWorkshop(workshopId);
+        ProposalWorkshop propWorkshop = propWorkshopRepository.getById(id);
         mav.getModelMap().addAttribute("propWorkshop", propWorkshop);
         mav.setViewName("editProposal");
         return mav;
     }
 
-    public @ResponseBody ResponseEntity<?> updateProposal(Long workshopId,
-                                                          Long id,
+    public @ResponseBody ResponseEntity<?> updateProposal(Long id,
                                                           MultipartFile suratProposal,
                                                           HttpServletResponse response,
                                                           ProposalWorkshop proposalWorkshop) throws IOException {
         ProposalWorkshop propWorkshop = propWorkshopRepository.getById(id);
-        Workshop getId = workshopRepository.getReferenceById(workshopId);
+//        Workshop getId = workshopRepository.getReferenceById(workshopId);
 
         String fileName = StringUtils.cleanPath(suratProposal.getOriginalFilename());
 

@@ -48,8 +48,8 @@ public class ProposalController {
     }
 
     @GetMapping(path = "/proposal-workshop/{id}/download/{docName}")
-    public ResponseEntity<?> downloadFile(@PathVariable("id") Long id,
-                                          @PathVariable("docName") String docName) {
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("id") Long id,
+                                               @PathVariable("docName") String docName) {
 //        byte[] fileProposal = proposalService.downloadProposal(docName);
 //        return ResponseEntity.status(HttpStatus.OK)
 //                .contentType(MediaType.valueOf("application/pdf"))
@@ -57,24 +57,23 @@ public class ProposalController {
         return proposalService.downloadProposal(id, docName);
     }
 
-    @GetMapping(path = "/proposal-workshop/{workshop_id}/deleteProposal")
-    public @ResponseBody ResponseEntity<?> deleteProposal(@PathVariable("workshop_id") Long workshopId,
+    @GetMapping(path = "/proposal-workshop/deleteProposal/{id}")
+    public @ResponseBody ResponseEntity<?> deleteProposal(@PathVariable("id") Long id,
                                                           String fileName,
                                                           HttpServletResponse response) {
-        return proposalService.deletedProposal(workshopId, fileName, response);
+        return proposalService.deletedProposal(id, fileName, response);
     }
 
-    @GetMapping(path = "/proposal-workshop/{workshop_id}/editProposal")
-    public ModelAndView editProposal(@PathVariable("workshop_id") Long workshopId) {
-        return proposalService.editProposal(workshopId);
+    @GetMapping(path = "/proposal-workshop/editProposal/{id}")
+    public ModelAndView editProposal(@PathVariable("id") Long id) {
+        return proposalService.editProposal(id);
     }
 
-    @PostMapping(path = "/proposal-workshop/{workshop_id}/update/{id}")
-    public @ResponseBody ResponseEntity<?> updateProposal(@PathVariable("workshop_id") Long workshopId,
-                                                          @PathVariable("id") Long id,
+    @PostMapping(path = "/proposal-workshop/editProposal/{id}/update")
+    public @ResponseBody ResponseEntity<?> updateProposal(@PathVariable("id") Long id,
                                                           @RequestParam("suratProposal") MultipartFile suratProposal,
                                                           HttpServletResponse response,
                                                           ProposalWorkshop proposalWorkshop) throws IOException {
-        return proposalService.updateProposal(workshopId, id, suratProposal, response, proposalWorkshop);
+        return proposalService.updateProposal(id, suratProposal, response, proposalWorkshop);
     }
 }
