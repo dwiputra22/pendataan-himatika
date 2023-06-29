@@ -24,7 +24,7 @@ public class AnggotaController {
 
     @GetMapping(path = "/{nim}")
     public ResponseEntity<Optional<Anggota>> getUsers(
-            @RequestParam(value = "nim", defaultValue = "") Integer nim) {
+            @RequestParam(value = "nim", defaultValue = "") String nim) {
         return ResponseEntity.ok(anggotaService.getUsers(nim));
     }
 

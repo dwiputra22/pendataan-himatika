@@ -1,7 +1,6 @@
 package com.pendataan.anggota.services;
 
 import com.pendataan.anggota.entity.Anggota;
-import com.pendataan.anggota.entity.AnggotaDetails;
 import com.pendataan.anggota.registration.token.ConfirmationToken;
 import com.pendataan.anggota.registration.token.ConfirmationTokenService;
 import com.pendataan.anggota.repositories.AnggotaRepository;
@@ -31,12 +30,11 @@ public class AnggotaService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String nim) throws UsernameNotFoundException {
-        Integer nimInt = Integer.parseInt(nim);
-        return anggotaRepository.findByNim(nimInt)
+        return anggotaRepository.findByNim(nim)
                 .orElseThrow(()-> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, nim)));
     }
 
-    public String signUpUser(Anggota anggota, AnggotaDetails anggotaDetails) {
+    public String signUpUser(Anggota anggota) {
         boolean userExistEmail = anggotaRepository
                 .findByEmail(anggota.getEmail())
                 .isPresent();
@@ -45,7 +43,7 @@ public class AnggotaService implements UserDetailsService {
         }
 
         boolean userExistNim = anggotaRepository
-                .findByNim(Integer.parseInt(anggota.getNim()))
+                .findByNim(anggota.getNim())
                 .isPresent();
         if (userExistNim) {
             throw new IllegalStateException("Nim Anda Sudah di Daftarkan");
@@ -81,7 +79,7 @@ public class AnggotaService implements UserDetailsService {
         return users;
     }
 
-    public Optional<Anggota> getUsers(Integer nim) {
+    public Optional<Anggota> getUsers(String nim) {
         Optional<Anggota> usersId = anggotaRepository.findByNim(nim);
         return usersId;
     }

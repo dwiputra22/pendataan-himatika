@@ -1,0 +1,395 @@
+.registrasi, .registrasi * {
+box-sizing: border-box;
+}
+
+::placeholder {
+    color: rgba(134, 134, 135, 0.71);
+    text-align: right;
+    font: 600 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+.registrasi {
+    width: 192px;
+    height: 108px;
+    position: relative;
+}
+
+.rectangle-7 {
+    background: #ffffff;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.sudah-punya-akun-masuk {
+    color: #555557;
+    text-align: center;
+    font: 800 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 480px;
+    top: 630px;
+    width: 317px;
+    height: 31px;
+}
+
+.sudah-punya-akun-masuk2 {
+    color: #1b48ba;
+    text-align: center;
+    font: 800 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 245px;
+    text-decoration: none;
+    width: 10px;
+    height: 31px;
+}
+
+. {
+    color: #1b48ba;
+    text-align: center;
+    font: 800 25px/30px 'Nunito', sans-serif;
+    position: absolute;
+    left: 1443px;
+    top: 981px;
+    width: 86px;
+    height: 31px;
+}
+.button-buat-akun {
+    position: absolute;
+    inset: 0;
+}
+
+.rectangle-10 {
+    background: #1b48ba;
+    border-radius: 15px;
+    color: #ffffff;
+    text-align: center;
+    font: 900 15px/20px 'Nunito', sans-serif;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 525px;
+    top: 585px;
+}
+
+.buat-akun {
+    color: #ffffff;
+    text-align: center;
+    font: 900 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 989.01px;
+    top: 913px;
+    width: 538.99px;
+    height: 31px;
+}
+
+.divisi {
+    position: absolute;
+    inset: 0;
+}
+
+.rectangle-12 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 750px;
+    top: 335px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.divisi2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 750px;
+    top: 310px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.select-icon {
+    position: absolute;
+    left: 1489.56px;
+    top: 665.22px;
+    transform: translate(-24.55px, -22.22px);
+    overflow: visible;
+}
+
+.jabatan {
+    position: absolute;
+    inset: 0;
+}
+.rectangle-122 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 750px;
+    top: 425px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+ .jabatan2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 750px;
+    top: 400px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.select-icon2 {
+    position: absolute;
+    left: 1489.56px;
+    top: 801.22px;
+    transform: translate(-24.55px, -22.22px);
+    overflow: visible;
+}
+
+.email {
+    position: absolute;
+    inset: 0;
+}
+
+.email2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 750px;
+    top: 490px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.rectangle-121 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 750px;
+    top: 515px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.tahun-kepengurusan {
+    position: absolute;
+    inset: 0;
+}
+
+.rectangle-123 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 300px;
+    top: 515px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.tahun-kepengurusan2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 300px;
+    top: 490px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.calender-icon {
+    position: absolute;
+    left: 868px;
+    top: 914px;
+    overflow: visible;
+}
+
+.password {
+    position: absolute;
+    inset: 0;
+}
+
+.rectangle-124 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 300px;
+    top: 425px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.password2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 300px;
+    top: 400px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.2 {
+    color: rgba(134, 134, 135, 0.71);
+    text-align: left;
+    font: 400 90px/30px 'Nunito', sans-serif;
+    position: absolute;
+    left: 409px;
+    top: 753px;
+    width: 437px;
+    height: 31px;
+}
+
+.no-telepon {
+    position: absolute;
+    inset: 0;
+}
+
+.rectangle-125 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 750px;
+    top: 245px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.no-telepon2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 750px;
+    top: 220px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.nim {
+    position: absolute;
+    inset: 0;
+}
+
+.rectangle-11 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 300px;
+    top: 335px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.nim2 {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 300px;
+    top: 310px;
+    width: 326.52px;
+    height: 31px;
+}
+
+.nama {
+    position: absolute;
+    inset: 0;
+}
+.rectangle-112 {
+    background: #ffffff;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #002ea6;
+    border-width: 1px;
+    width: 290px;
+    height: 38px;
+    position: absolute;
+    left: 300px;
+    top: 245px;
+    box-shadow: 4px 4px 4px 0px rgba(107, 134, 203, 1.00);
+}
+
+.nama-lengkap {
+    color: #002ea6;
+    text-align: left;
+    font: 700 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 300px;
+    top: 220px;
+    width: 326.52px;
+    height: 31px;
+}
+
+
+.buat-akun-anggota-psdm {
+    color: #1c53a5;
+    text-align: center;
+    font: 800 15px/20px 'Nunito', sans-serif;
+    position: absolute;
+    left: 375px;
+    top: 180px;
+    width: 591px;
+    height: 31px;
+}
+
+.registrasi2 {
+    color: #1c53a5;
+    text-align: left;
+    font: 800 30px 'Nunito', sans-serif;
+    position: absolute;
+    left: 588px;
+    top: 140px;
+}
+
+.logo {
+    width: 146px;
+    height: 146px;
+    position: absolute;
+    left: 600px;
+    top: 10px;
+}

@@ -14,6 +14,7 @@ public class RegistrationRequest {
     private final String thnKepengurusan;
     private final String divisi;
     private final String jabatan;
+    private final String noTelepon;
     private final String email;
     private final String password;
 }

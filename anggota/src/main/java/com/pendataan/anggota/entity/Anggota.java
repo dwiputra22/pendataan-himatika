@@ -41,6 +41,9 @@ public class Anggota implements UserDetails {
     @NotBlank(message = "Masukkan Tahun Jabatan Anda!")
     @Column(name = "jabatan")
     private String jabatan;
+    @NotBlank(message = "Masukkan Nomor Telepon Anda!")
+    @Column(name = "noTelepon")
+    private String noTelepon;
     @Email(regexp = "[a-z0-9._%+-]+@perbanas+\\.id",
     flags = Pattern.Flag.CASE_INSENSITIVE, message = "Email Harus Menggunakan Akun Perbanas")
     @NotBlank(message = "Masukkan Email Anda!")
@@ -57,12 +60,13 @@ public class Anggota implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public Anggota(Integer nim, String nama, String thnKepengurusan, String divisi, String jabatan, String email, String password, Role status) {
-        this.nim = String.valueOf(nim);
+    public Anggota(String nim, String nama, String thnKepengurusan, String divisi, String jabatan, String noTelepon, String email, String password, Role status) {
+        this.nim = nim;
         this.nama = nama;
         this.thnKepengurusan = thnKepengurusan;
         this.divisi = divisi;
         this.jabatan = jabatan;
+        this.noTelepon = noTelepon;
         this.email = email;
         this.password = password;
         this.status = status;

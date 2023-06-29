@@ -1,0 +1,428 @@
+.dashboard,
+.dashboard * {
+  box-sizing: border-box;
+}
+.dashboard {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+}
+.rectangle-7 {
+  background: #ffffff;
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.sidebar {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-8 {
+  background: #1c53a5;
+  border-radius: 0px 20px 20px 0px;
+  width: 300px;
+  height: 600px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  box-shadow: inset 0px 6px 6px 0px rgba(0, 0, 0, 0.25);
+}
+.logout {
+  width: 140px;
+  height: 35px;
+  position: static;
+}
+.logout2 {
+  color: #ffffff;
+  text-align: left;
+  font: 700 15px "Nunito", sans-serif;
+  position: absolute;
+  left: 130px;
+  top: 550px;
+}
+.vector {
+  position: absolute;
+  width: 24px;
+  height: 17px;
+  left: 100px;
+  top: 550px;
+  overflow: visible;
+}
+.dokumen {
+  width: 437px;
+  height: 249px;
+  position: static;
+}
+.rectangle-9 {
+  background: rgba(255, 255, 255, 0.33);
+  border-radius: 15px;
+  width: 437px;
+  height: 56px;
+  position: absolute;
+  left: 42px;
+  top: 260px;
+}
+.peserta-workshop {
+  color: #ffffff;
+  text-align: left;
+  font: 800 18px "Nunito", sans-serif;
+  position: absolute;
+  left: 45px;
+  top: 300px;
+}
+. {
+  color: #ffffff;
+  text-align: left;
+  font: 500 40px "Manrope", sans-serif;
+  position: absolute;
+  left: 440px;
+  top: 454px;
+}
+.dokumen2 {
+  color: #ffffff;
+  text-align: left;
+  font: 800 18px "Nunito", sans-serif;
+  position: absolute;
+  left: 45px;
+  top: 260px;
+}
+.2 {
+  color: #ffffff;
+  text-align: left;
+  font: 500 40px "Manrope", sans-serif;
+  position: absolute;
+  left: 439px;
+  top: 389px;
+}
+.anggota {
+  width: 111px;
+  height: 35px;
+  position: static;
+}
+.anggota2 {
+  color: #ffffff;
+  text-align: left;
+  font: 800 18px "Nunito", sans-serif;
+  position: absolute;
+  left: 45px;
+  top: 220px;
+}
+.dashboard2 {
+  width: 179px;
+  height: 35px;
+  position: static;
+}
+.dashboard-icon {
+  width: 21px;
+  height: 22px;
+  position: absolute;
+  left: 63px;
+  top: 279px;
+  overflow: hidden;
+}
+.dashboard3 {
+  color: #ffffff;
+  text-align: left;
+  font: 800 18px "Nunito", sans-serif;
+  position: absolute;
+  left: 45px;
+  top: 180px;
+}
+.logo {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  left: 80px;
+  top: 25px;
+}
+.total {
+  position: absolute;
+  inset: 0;
+}
+.total-workshop {
+  width: 390.71px;
+  height: 238px;
+  position: static;
+}
+.rectangle-10 {
+  background: #bad5fe;
+  border-radius: 10px;
+  width: 390.71px;
+  height: 238px;
+  position: absolute;
+  left: 1013px;
+  top: 106px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+.total-workshop2 {
+  color: #1053a9;
+  text-align: left;
+  font: 800 28px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 1044px;
+  top: 144px;
+  width: 230px;
+}
+.laporan-bulananan {
+  color: #1053a9;
+  text-align: left;
+  font: 700 18px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 1049px;
+  top: 172px;
+  width: 230px;
+}
+.png-clipart-trend-line-line-chart-market-trend-graph-of-a-function-business-growth-miscellaneous-angle-removebg-preview-1 {
+  width: 216px;
+  height: 124px;
+  position: absolute;
+  left: 1169px;
+  top: 212px;
+}
+._30 {
+  color: #606e82;
+  text-align: right;
+  font: 700 18px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 1048px;
+  top: 204px;
+  width: 230px;
+}
+.total-peserta {
+  width: 390.71px;
+  height: 238px;
+  position: static;
+}
+.rectangle-102 {
+  background: #bad5fe;
+  border-radius: 10px;
+  width: 390.71px;
+  height: 238px;
+  position: absolute;
+  left: 585px;
+  top: 106px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+.total-peserta2 {
+  color: #1053a9;
+  text-align: left;
+  font: 800 28px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 616px;
+  top: 144px;
+  width: 230px;
+}
+.laporan-bulananan2 {
+  color: #1053a9;
+  text-align: left;
+  font: 700 18px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 621px;
+  top: 172px;
+  width: 230px;
+}
+._302 {
+  color: #606e82;
+  text-align: right;
+  font: 700 18px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 620px;
+  top: 204px;
+  width: 230px;
+}
+.workshop-coming-soon {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-11 {
+  border-radius: 10px;
+  position: absolute;
+  left: 584px;
+  top: 389px;
+  overflow: visible;
+}
+.noticeboard {
+  color: #1053a9;
+  text-align: left;
+  font: 700 28px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 611.69px;
+  top: 409.96px;
+  width: 265.25px;
+  height: 29.95px;
+}
+.rectangle-27 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #7599f8;
+  border-width: 2px;
+  width: 771.01px;
+  height: 492px;
+  position: absolute;
+  left: 608.49px;
+  top: 456px;
+}
+.tanggal {
+  color: #1053a9;
+  text-align: center;
+  font: 700 20px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 608px;
+  top: 469px;
+  width: 132px;
+}
+.detail {
+  color: #1053a9;
+  text-align: center;
+  font: 700 20px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 743px;
+  top: 469px;
+  width: 637px;
+}
+._15-5-2023-15-5-2023-15-5-2023-15-5-2023-15-5-2023-15-5-2023-15-5-2023-15-5-2023-15-5-2023-15-5-2023 {
+  color: #1053a9;
+  text-align: left;
+  font: 600 22px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 623px;
+  top: 521px;
+  width: 117px;
+}
+.telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c-telah-selesai-menjalani-workshop-pemrograman-dasar-c {
+  color: #1053a9;
+  text-align: left;
+  font: 500 22px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 756px;
+  top: 521px;
+  width: 619px;
+}
+.pembicara {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-112 {
+  background: #bad5fe;
+  border-radius: 10px;
+  width: 421px;
+  height: 349px;
+  position: absolute;
+  left: 1441px;
+  top: 106px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+.rectangle-272 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #8faffa;
+  border-width: 1px;
+  width: 374.58px;
+  height: 259px;
+  position: absolute;
+  left: 1465.83px;
+  top: 173px;
+}
+.pembicara2 {
+  color: #1053a9;
+  text-align: left;
+  font: 700 28px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 1465.83px;
+  top: 127px;
+  width: 158.68px;
+}
+.noticeboard2 {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-113 {
+  background: #bad5fe;
+  border-radius: 10px;
+  width: 421px;
+  height: 479px;
+  position: absolute;
+  left: 1441px;
+  top: 494px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+.show-all {
+  color: #1053a9;
+  text-align: left;
+  font: 700 22px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 1723px;
+  top: 521px;
+  width: 128.76px;
+  height: 29.95px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.3 {
+  color: #1053a9;
+  text-align: left;
+  font: 600 30px/30px "Manrope", sans-serif;
+  position: absolute;
+  left: 1822.41px;
+  top: 521px;
+  width: 18.47px;
+  height: 29.95px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.rectangle-273 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #8faffa;
+  border-width: 2px;
+  width: 374.58px;
+  height: 387px;
+  position: absolute;
+  left: 1465.83px;
+  top: 561px;
+}
+.workshop {
+  color: #1053a9;
+  text-align: left;
+  font: 700 28px/30px "Nunito", sans-serif;
+  position: absolute;
+  left: 1465.83px;
+  top: 520px;
+  width: 202.94px;
+  height: 41px;
+}
+.png-clipart-trend-line-line-chart-market-trend-graph-of-a-function-business-growth-miscellaneous-angle-removebg-preview-12 {
+  width: 216px;
+  height: 124px;
+  position: absolute;
+  left: 743px;
+  top: 212px;
+}
+.line-11 {
+  border-style: solid;
+  border-color: #7398f8;
+  border-width: 2px 0 0 0;
+  width: 490px;
+  height: 0px;
+  position: absolute;
+  left: 742px;
+  top: 458px;
+  transform-origin: 0 0;
+  transform: rotate(90.239deg) scale(1, 1);
+}
+.line-12 {
+  border-style: solid;
+  border-color: #7398f8;
+  border-width: 2px 0 0 0;
+  width: 769px;
+  height: 0px;
+  position: absolute;
+  left: 611px;
+  top: 511px;
+  transform-origin: 0 0;
+  transform: rotate(-0.151deg) scale(1, 1);
+}

@@ -16,7 +16,7 @@ public interface PendaftaranRepository extends JpaRepository<PendaftaranWorkshop
 
     @Transactional
     @Modifying
-    @Query("select a from PendaftaranWaorkshop a where a. id = ?1 and a. judulWorkshop = ?2")
+    @Query("select a from PendaftaranWorkshop a where a. id = ?1 and a. judulWorkshop = ?2")
     PendaftaranWorkshop getByJudulWorkshop(Long id, String judulWorkshop);
 
     @Transactional

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface AnggotaRepository extends JpaRepository<Anggota, Long> {
-    Optional<Anggota> findByNim(Integer nim);
+    Optional<Anggota> findByNim(String nim);
 
     Optional<Anggota> findByEmail(String email);
 

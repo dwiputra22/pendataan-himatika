@@ -2,7 +2,6 @@ package com.pendataan.anggota.registration;
 
 import com.pendataan.anggota.email.EmailSender;
 import com.pendataan.anggota.entity.Anggota;
-import com.pendataan.anggota.entity.AnggotaDetails;
 import com.pendataan.anggota.entity.Role;
 import com.pendataan.anggota.registration.token.ConfirmationToken;
 import com.pendataan.anggota.registration.token.ConfirmationTokenService;
@@ -35,6 +34,7 @@ public class RegistrationService {
         inputAnggota.setThnKepengurusan(anggota.getThnKepengurusan());
         inputAnggota.setDivisi(anggota.getDivisi());
         inputAnggota.setJabatan(anggota.getJabatan());
+        inputAnggota.setNoTelepon(anggota.getNoTelepon());
         inputAnggota.setEmail(anggota.getEmail());
         inputAnggota.setPassword(anggota.getPassword());
         modelAndView.getModelMap().addAttribute("user", anggota);
@@ -51,15 +51,16 @@ public class RegistrationService {
 
         String token = anggotaService.signUpUser(
                 new Anggota(
-                        Integer.parseInt(request.getNim()),
+                        request.getNim(),
                         request.getNama(),
                         request.getThnKepengurusan(),
                         request.getDivisi(),
                         request.getJabatan(),
+                        request.getNoTelepon(),
                         request.getEmail(),
                         request.getPassword(),
                         Role.USER
-                ), new AnggotaDetails()
+                )
         );
 
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
