@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form Proposal</title>
+    <link href="/static/css/formProposal.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
+    <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito@800&display=swap"/>
+    <script type="text/javascript" src="/static/js/formProposal.js"></script>
+</head>
+<body>
+<div class="form-proposal">
+    <div class="rectangle-7"></div>
+
+    <div class="sidebar">
+        <img class="logo" src="/static/img/logo.png"/>
+        <ul class="dokumen">
+            <li class="dashboard2">
+                <a class="list-hover" th:href="@{http://localhost:8081/himatika}">Dashboard</a>
+            </li>
+
+            <li class="anggota">
+                <a class="list-hover" th:href="@{http://localhost:8080/himatika/anggota}">Anggota</a>
+            </li>
+
+            <li class="workshop">
+                <div>
+                    <a class="list-hover" th:href="@{http://localhost:8081/himatika/workshop}">Workshop</a>
+                </div>
+                <ul class="list-workshop">
+                    <li><a class="proposal-workshop" th:href="@{http://localhost:8081/himatika/proposal-workshop}">Proposal</a></li>
+                    <li><a class="lpj-workshop" th:href="@{http://localhost:8081/himatika/lpj-workshop}">Lpj</a></li>
+                    <li><a class="dokumentasi-workshop" th:href="@{http://localhost:8081/himatika/dokumentasi}">Dokumentasi</a></li>
+                </ul>
+            </li>
+
+            <li class="peserta-workshop">
+                <div>
+                    <a class="list-hover">Peserta Workshop</a>
+                </div>
+                <ul class="list-peserta">
+                    <li><a class="proposal-workshop" th:href="@{http://localhost:8082/himatika}">Pendaftaran Peserta</a></li>
+                    <li><a class="lpj-workshop" th:href="@{http://localhost:8082/himatika}">Absensi Peserta</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="logout">
+            <img class="logout-icon" src="/static/img/logout.png">
+            <a class="logout2" th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+
+    <div class="rectangle-1">
+        <h1 class="input-proposal">Input Proposal</h1>
+        <form th:action="@{/himatika/proposal-workshop/{workshopId}/input/upload(workshopId=${workshopId})}"
+              th:object="${proposalInput}"
+              method="post"
+              class="form-proposal"
+              enctype="multipart/form-data">
+            <div class="form-input">
+                <label for="nim" class="text-label">Nim</label>
+                <input id="nim" th:value="*{nim}" type="text" name="nim"
+                       th:errorClass="is-invalid"
+                       class="input"
+                       placeholder="Masukkan Nim Anda">
+                <p th:errors="${nim}" class="invalid-feedback"
+                   th:if="${#fields.hasErrors('nim')}"></p>
+            </div>
+            <div class="form-input">
+                <label for="nama" class="text-label">Nama Lengkap</label>
+                <input id="nama" th:value="*{nama}" type="text" name="nama"
+                       th:errorClass="is-invalid"
+                       class="input"
+                       placeholder="Masukkan Nama Anda">
+                <p th:errors="${nama}" class="invalid-feedback"
+                   th:if="${#fields.hasErrors('nama')}"></p>
+            </div>
+            <div class="form-input">
+                <label for="tahunKepengurusan" class="text-label">Tahun Kepengurusan</label>
+                <input id="tahunKepengurusan" th:value="*{tahunKepengurusan}" type="text" name="tahunKepengurusan"
+                       th:errorClass="is-invalid"
+                       class="input"
+                       placeholder="Masukkan Tahun Kepengurusan Selama Menjabat">
+                <p th:errors="${tahunKepengurusan}" class="invalid-feedback"
+                   th:if="${#fields.hasErrors('tahunKepengurusan')}"></p>
+            </div>
+            <div class="form-input">
+                <label for="suratProposal" class="text-label">File Proposal</label>
+                <input id="suratProposal" th:value="*{suratProposal}" type="file" name="suratProposal"
+                       th:errorClass="is-invalid"
+                       class="input-file"
+                       placeholder="Masukkan File Proposal Workshop">
+                <p th:errors="${suratProposal}" class="invalid-feedback"
+                   th:if="${#fields.hasErrors('suratProposal')}"></p>
+            </div>
+            <div class="form-input">
+                <input class="btn-submit"
+                       type="submit" value="Upload">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
