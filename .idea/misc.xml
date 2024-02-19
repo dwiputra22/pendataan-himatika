@@ -9,6 +9,11 @@
         <option value="$PROJECT_DIR$/peserta/pom.xml" />
         <option value="$PROJECT_DIR$/workshops/pom.xml" />
         <option value="$PROJECT_DIR$/workshop/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end Service/anggota/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end Service/workshop/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end Service/peserta/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end Service/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end Service/auth-service/pom.xml" />
       </list>
     </option>
   </component>

@@ -19,6 +19,6 @@ public interface AnggotaRepository extends JpaRepository<Anggota, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Anggota a " +
-            "SET a.enabled = TRUE WHERE a.email = ?1")
-    int enableUsers(String email);
+            "SET a.enabled = TRUE WHERE a.nim = ?1")
+    int enableUsers(String nim);
 }

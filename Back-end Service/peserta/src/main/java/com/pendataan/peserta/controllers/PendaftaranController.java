@@ -1,6 +1,6 @@
 package com.pendataan.peserta.controllers;
 
-import com.pendataan.peserta.entity.PendaftaranWorkshop;
+import com.pendataan.peserta.entity.PesertaWorkshop;
 import com.pendataan.peserta.services.PendaftaranService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,25 +18,18 @@ public class PendaftaranController {
     private PendaftaranService pendaftaranService;
 
     @GetMapping("/pendaftaran")
-    public ResponseEntity showAllPendaftaran(String judulWorkshop) {
-        return pendaftaranService.getAllPendaftaran(judulWorkshop);
+    public ModelAndView showAllPendaftaran() {
+        return pendaftaranService.getAllPendaftaran();
     }
 
-    @GetMapping("/pendaftaran/{workshopId}")
-    public ResponseEntity<?> getPendaftaranByJudul(@PathVariable("workshopId") Long workshopId) {
-        return pendaftaranService.getPendaftaranByIdWorkshop(workshopId);
+    @GetMapping(path = "/pendaftaran/get")
+    public ModelAndView findAbsensi(@RequestParam(value = "judulWorkshop") String judulWorkshop) {
+        return pendaftaranService.findPendaftaran(judulWorkshop);
     }
 
-    @GetMapping("/pendaftaran/{workshopId}/formPendaftaran")
-    public ModelAndView formPendaftaran(@PathVariable("workshopId") Long workshopId) {
-        return pendaftaranService.formPendaftaran(workshopId);
-    }
-
-    @PostMapping("/pendaftaran/formPendaftaran/inputPendaftaran")
-    public ResponseEntity<?> inputPendaftaran(@RequestParam("judulWorkshop") String judulWorkshop,
-                                              @RequestBody PendaftaranWorkshop pendaftaran,
-                                              HttpServletResponse response) {
-        return pendaftaranService.uploadPendaftaran(judulWorkshop, pendaftaran, response);
+    @GetMapping("/pendaftaran/{judulWorkshop}")
+    public ModelAndView getPendaftaranByJudul(@PathVariable("judulWorkshop") String judulWorkshop) {
+        return pendaftaranService.getPendaftaran(judulWorkshop);
     }
 
     @GetMapping(path = "/pendaftaran/{judulWorkshop}/editPendaftaran/{id}")
@@ -49,7 +42,7 @@ public class PendaftaranController {
     public @ResponseBody ResponseEntity<?> updatePendaftaran(@PathVariable("id") Long id,
                                                              @PathVariable("judulWorkshop") String judulWorkshop,
                                                              HttpServletResponse response,
-                                                             PendaftaranWorkshop pendaftaran) throws IOException {
+                                                             PesertaWorkshop pendaftaran) throws IOException {
         return pendaftaranService.updatePendaftaran(id, judulWorkshop, response, pendaftaran);
     }
 

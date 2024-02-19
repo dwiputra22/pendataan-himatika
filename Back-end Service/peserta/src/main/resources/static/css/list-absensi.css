@@ -1,0 +1,469 @@
+.page-workshop,
+.page-workshop * {
+  box-sizing: border-box;
+}
+.page-workshop {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+.rectangle-7 {
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.sidebar {
+  background: #1c53a5;
+  border-radius: 0px 25px 25px 0px;
+  width: 320px;
+  height: 100%;
+  position: absolute;
+  inset: 0px;
+  left: 0px;
+  top: 0px;
+  box-shadow: inset 0px 6px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.logout {
+  width: 140px;
+  height: 35px;
+  position: static;
+}
+.logout2 {
+  text-decoration: none;
+  color: #ffffff;
+  text-align: left;
+  font: 750 18px "Nunito", sans-serif;
+  position: absolute;
+  left: 85px;
+  top: 560px;
+}
+.logout-icon {
+  position: absolute;
+  height: 25px;
+  width: 28px;
+  left: 50px;
+  top: 558px;
+  overflow: visible;
+}
+
+
+.btnworkshop {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.peserta-workshop {
+  text-align: left;
+  position: relative;
+  left: 50px;
+  top: 250px;
+  width: 250px;
+}
+
+.workshop {
+  text-align: left;
+  position: relative;
+  left: 50px;
+  top: 245px;
+  width: 250px;
+}
+
+.list-menu {
+    position: relative;
+    left: 20px;
+    width: 230px;
+    border-radius: 10px;
+}
+
+.anggota2 {
+  width: 111px;
+  height: 35px;
+  position: static;
+}
+.anggota {
+  text-align: left;
+  position: absolute;
+  left: 50px;
+  top: 200px;
+  width: 250px;
+}
+.dashboard3 {
+  width: 179px;
+  height: 35px;
+  position: static;
+}
+
+.dashboard2 {
+  text-align: left;
+  position: absolute;
+  left: 50px;
+  top: 160px;
+  width: 250px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 100px;
+  top: 40px;
+}
+
+.rectangle-11 {
+    background: #bad5fe;
+    border-radius: 10px;
+    position: absolute;
+    width: 1000px;
+    height: 525px;
+    left: 340px;
+    top: 45px;
+    overflow: visible;
+    box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+
+.line-1 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 0,5px;
+    top: 37px;
+    width: 955px;
+}
+
+.line-2 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 435px;
+    left: 140px;
+    width: 0,5px;
+}
+
+.line-3 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 435px;
+    left: 310px;
+    width: 0,5px;
+}
+
+.line-4 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 435px;
+    left: 435px;
+    width: 0,5px;
+}
+
+.line-5 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 435px;
+    left: 523px;
+    width: 0,5px;
+}
+
+.line-6 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 435px;
+    left: 665px;
+    width: 0,5px;
+}
+
+.line-7 {
+    position: absolute;
+    outline-color: rgba(115, 152, 248, 1);
+    outline-width: 1px;
+    outline-style: solid;
+    box-sizing: border-box;
+    height: 435px;
+    left: 812px;
+    width: 0,5px;
+}
+
+.previous {
+    position: absolute;
+    font: 800 25px/10px "Nunito", sans-serif;
+    color: #1053a9;
+    top: 465px;
+    left: 820px;
+    text-decoration: none;
+}
+
+.next {
+    position:absolute;
+    font: 800 25px/10px "Nunito", sans-serif;
+    color: #1053a9;
+    top: 465px;
+    right: 25px;
+    text-decoration: none;
+}
+
+.rectangle-27 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #7599f8;
+  border-width: 2px;
+  width: 960px;
+  height: 440px;
+  position: absolute;
+  left: 20px;
+  top: 70px;
+}
+
+.detail {
+  color: #1053a9;
+  text-align: left;
+  font: 800 20px/25px "Nunito", sans-serif;
+  position: absolute;
+  left: 20px;
+  top: 15px;
+}
+
+.title-workshop {
+  color: #1053a9;
+  text-align: left;
+  font: "Nunito", sans-serif;
+  display: flex;
+}
+
+.nama-workshop {
+  position: absolute;
+  left: 20px;
+  top: 40px;
+}
+
+.judul-workshop {
+  position: absolute;
+  left: 150px;
+  top: 40px;
+}
+
+.table-absensi th {
+  padding: 0,5px;
+  text-align: center;
+}
+
+.table-absensi td {
+    padding-top: 5px;
+}
+
+.row-value {
+    margin-top: 100px;
+    position: relative;
+    top: 37px;
+}
+
+.nama {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 15px;
+    top: 7px;
+}
+
+.value-nama {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 0px;
+    width: 140px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.email {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 202px;
+    top: 7px;
+}
+
+.value-email {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 0px;
+    width: 170px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.asal-instansi {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 325px;
+    top: 7px;
+}
+
+.value-asalInstansi {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 1px;
+    width: 120px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.pekerjaan {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 443px;
+    top: 7px;
+}
+
+.value-status {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 3px;
+    width: 90px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.kesan {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 557px;
+    width: 70px;
+    top: 7px;
+}
+.value-kesan {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 1px;
+    width: 145px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.pesan {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 704px;
+    width: 70px;
+    top: 7px;
+}
+.value-pesan {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 1px;
+    width: 145px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.tanggal-dibuat {
+    color: #1053a9;
+    font: 700 15px "Nunito", sans-serif;
+    position: absolute;
+    left: 827px;
+    top: 7px;
+}
+
+.value-tgldibuat {
+    color: rgba(16, 83, 169, 1);
+    text-align: center;
+    position: inherit;
+    left: 2px;
+    width: 145px;
+    font-size: 13px;
+    font-family: Nunito;
+}
+
+.dokumen {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dokumen li {
+  margin-bottom: 5px;
+}
+
+.dokumen a {
+  display: block;
+  color: #ffffff;
+  font: 800 18px "Nunito", sans-serif;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.dokumen a:hover {
+  background-color: #FFFFFF60;
+  border-radius: 10px;
+}
+
+.circle-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #1053A9;
+      border: none;
+      display: flex;
+      position: absolute;
+      cursor: pointer;
+      top: 442px;
+      right: 1px;
+      align-items: center;
+      justify-content: center;
+}
+
+.plus-icon {
+  width: 24px;
+  height: 24px;
+  display: contents;
+}
+
+.plus-icon::before,
+.plus-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 10px;
+  height: 20px;
+  width: 6px;
+  background-color: #ffff;
+}
+
+.plus-icon::before {
+  transform: rotate(90deg);
+}
+
+.plus-icon::after {
+  transform: rotate(0deg);
+}

@@ -1,12 +1,17 @@
 package com.pendataan.workshop.services;
 
+import com.pendataan.workshop.dto.StatusCustomLog;
+import com.pendataan.workshop.dto.StatusWorkshop;
+import com.pendataan.workshop.entity.CustomLog;
 import com.pendataan.workshop.entity.LpjWorkshop;
 import com.pendataan.workshop.entity.Workshop;
+import com.pendataan.workshop.repositories.CustomLogRepository;
 import com.pendataan.workshop.repositories.LpjWorkshopRepository;
 import com.pendataan.workshop.repositories.WorkshopRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,18 +42,29 @@ public class LpjService {
     public static String uploadDirectory = System.getProperty("user.dir") + "/files/lpj-workshop";
     private final LpjWorkshopRepository lpjWorkshopRepository;
     private final WorkshopRepository workshopRepository;
+    private final CustomLogRepository logInfoRepository;
 
-    public ModelAndView getAllLpj() {
+    public ModelAndView pageLpj() {
         ModelAndView mav = new ModelAndView();
-        List<Workshop> lpjWorkshop = workshopRepository.findAll();
-        mav.getModelMap().addAttribute("lpjWorkshop", lpjWorkshop);
+        List<Workshop> workshop = workshopRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        mav.getModelMap().addAttribute("workshop", workshop);
+        mav.setViewName("lpjWorkshop");
+        return mav;
+    }
+
+    public ModelAndView getWorkshopLpj(String judulWorkshop) {
+        ModelAndView mav = new ModelAndView();
+        Workshop workshop = workshopRepository.findByJudulWorkshop(judulWorkshop);
+        mav.getModelMap().addAttribute("workshop", workshop);
         mav.setViewName("lpjWorkshop");
         return mav;
     }
 
     public ModelAndView getLpj(Long workshopId) {
         ModelAndView mav = new ModelAndView();
-        LpjWorkshop lpj = lpjWorkshopRepository.getById(workshopId);
+        LpjWorkshop lpj = lpjWorkshopRepository.getByWorkshopId(workshopId);
+        Workshop workshop = workshopRepository.getById(workshopId);
+        mav.getModelMap().addAttribute("workshop", workshop);
         mav.getModelMap().addAttribute("lpj", lpj);
         mav.setViewName("tampilLpj");
         return mav;
@@ -94,7 +110,7 @@ public class LpjService {
                 stream.close();
 //                Files.copy(suratLpj.getInputStream(), this.uploadDirectory.resolve(fileName));
             } catch (Exception e) {
-                log.info("in catch");
+                log.info("Folder Has Been Created");
                 e.printStackTrace();
             }
 
@@ -118,10 +134,20 @@ public class LpjService {
                 lpjWorkshop.setDocName(lpj.getDocName());
                 lpjWorkshop.setType(lpj.getType());
                 lpjWorkshop.setCreatedDate(lpj.getCreatedDate());
+                workshop.setStatus(String.valueOf(StatusWorkshop.DONE));
+                workshop.setUpdatedDate(LocalDateTime.now());
                 lpjWorkshop.setWorkshop(workshop);
                 return lpjWorkshopRepository.save(lpjWorkshop);
             });
             if (lpjWork.isPresent()) {
+                Workshop workshop = workshopRepository.getById(workshopId);
+                CustomLog customLog = new CustomLog();
+                customLog.setNim(lpjWorkshop.getNim());
+                customLog.setNama(lpjWorkshop.getNama());
+                customLog.setJudulWorkshop(workshop.getJudulWorkshop());
+                customLog.setAktivitas(StatusCustomLog.CREATED_LPJ.toString());
+                customLog.setTanggal(LocalDateTime.now());
+                logInfoRepository.save(customLog);
                 response.sendRedirect("/himatika/lpj-workshop");
                 return new ResponseEntity<>("Berhasil Upload Lpj Workshop", HttpStatus.OK);
             }
@@ -134,8 +160,7 @@ public class LpjService {
         return new ResponseEntity<>("Berhasil Upload Lpj Workshop ", HttpStatus.OK);
     }
 
-    public ResponseEntity<byte[]> downloadlpj(Long id,
-                                              String docName) throws IOException {
+    public ResponseEntity<byte[]> downloadlpj(String docName) throws IOException {
 
         //download from memory filesystem
 //        MediaType mediaType = FileUtils.getMediaTypeForDocName(this.servletContext, docName);
@@ -143,22 +168,37 @@ public class LpjService {
 //        Resource resource = new UrlResource(files.toUri());
 
         //download from db
-        Optional<LpjWorkshop> file = lpjWorkshopRepository.findByDocName(id, docName);
+        LpjWorkshop file = lpjWorkshopRepository.findByDocName(docName);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + docName)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .contentLength(file.get().getLpjByte().length)
-                .body(file.get().getLpjByte());
+                .contentLength(file.getLpjByte().length)
+                .body(file.getLpjByte());
     }
 
     public ResponseEntity<?> deletedLpj(Long id,
-                                        String fileName,
+                                        CustomLog logInfo,
                                         HttpServletResponse response) {
+        LpjWorkshop lpjWorkshop = lpjWorkshopRepository.getByWorkshopId(id);
+        String fileName = lpjWorkshop.getDocName();
         String path = uploadDirectory + "/" + fileName;
         File file = new File(path);
+        CustomLog customLog = new CustomLog();
+        customLog.setNim(logInfo.getNim());
+        customLog.setNama(logInfo.getNama());
+        customLog.setAktivitas(StatusCustomLog.DELETED_LPJ.toString());
+        customLog.setTanggal(LocalDateTime.now());
         try {
             if (id != null) {
                 lpjWorkshopRepository.deleteByWorkshopId(id);
+
+                Workshop workshop = workshopRepository.getById(id);
+                workshop.setStatus(StatusWorkshop.APPROVED.toString());
+                workshopRepository.save(workshop);
+
+                customLog.setJudulWorkshop(workshop.getJudulWorkshop());
+                logInfoRepository.save(customLog);
+
                 String pathFile = uploadDirectory + "/" + fileName;
                 System.out.println("Path=" + pathFile);
                 File fileToDelete = new File(pathFile);
@@ -193,6 +233,7 @@ public class LpjService {
                                                      HttpServletResponse response,
                                                      LpjWorkshop lpjWorkshop) throws IOException {
         LpjWorkshop lpj = lpjWorkshopRepository.getById(id);
+        Workshop workshop = workshopRepository.getById(id);
 
         String fileName = StringUtils.cleanPath(suratLpj.getOriginalFilename());
 
@@ -205,6 +246,15 @@ public class LpjService {
         lpj.setUpdatedDate(LocalDateTime.now());
 
         lpjWorkshopRepository.save(lpj);
+
+        CustomLog customLog = new CustomLog();
+        customLog.setNim(lpjWorkshop.getNim());
+        customLog.setNama(lpjWorkshop.getNama());
+        customLog.setJudulWorkshop(workshop.getJudulWorkshop());
+        customLog.setAktivitas(StatusCustomLog.UPDATE_PROPOSAL.toString());
+        customLog.setTanggal(LocalDateTime.now());
+        logInfoRepository.save(customLog);
+
         response.sendRedirect("/himatika/lpj-workshop");
         return new ResponseEntity<>(HttpStatus.OK);
     }

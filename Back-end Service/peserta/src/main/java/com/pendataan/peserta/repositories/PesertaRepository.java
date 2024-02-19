@@ -11,20 +11,22 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface PendaftaranRepository extends JpaRepository<PesertaWorkshop, Long> {
+public interface PesertaRepository extends JpaRepository<PesertaWorkshop, Long> {
     List<PesertaWorkshop> getByJudulWorkshop(String judulWorkshop);
 
-    PesertaWorkshop findByJudulWorkshop(String judulWorkshop);
+    PesertaWorkshop findByKodeUnik(String kodeUnik);
 
     @Transactional
     @Modifying
-    @Query("select a from PendaftaranWorkshop a where a. id = ?1 and a. judulWorkshop = ?2")
+    @Query("select a from PesertaWorkshop a where a. id = ?1 and a. judulWorkshop = ?2")
     PesertaWorkshop getByJudulWorkshop(Long id, String judulWorkshop);
 
     @Transactional
     @Modifying
-    @Query("delete from PendaftaranWorkshop p where p. id like ?1 and p. judulWorkshop like ?2")
+    @Query("delete from PesertaWorkshop p where p. id like ?1 and p. judulWorkshop like ?2")
     void deleteByJudulWorkshop(Long id, String judulWorkshop);
 
     PesertaWorkshop getByWorkshopId(Long workshopId);
+
+    PesertaWorkshop getByKodeUnik(String kodeUnik);
 }

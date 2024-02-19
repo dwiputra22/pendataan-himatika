@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Absensi</title>
+    <link href="/static/css/form-absensi.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
+    <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito@800&display=swap"/>
+    <link rel="icon" type="image/png" href="/static/img/logo.png"/>
+    <script type="text/javascript" src="/static/js/formAbsensi.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="page-form">
+<nav class="navbar-page navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="navbar-items">
+                    <a class="title-navbar" th:href="@{/}">BERANDA</a>
+                </li>
+                <li class="navbar-items">
+                    <a class="title-navbar" th:href="@{/list-workshop}">WORKSHOP</a>
+                </li>
+                <li class="navbar-items dropdown">
+                    <a class="title-navbar dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        FORM
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="title-navbar dropdown-item-customblue" th:href="@{/pendaftaran/formPendaftaran}">Pendaftaran
+                            Workshop</a></li>
+                        <li><a class="title-navbar dropdown-item-customblue" th:href="@{/absensi/formAbsensi}">Absensi
+                            Workshop</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="body-absensi">
+    <div class="rectangle-1">
+        <form class="form-input3" th:each="c :${formAbsensi}" th:action="@{/absensi/formAbsensi/get}">
+            <label for="cari" class="text-label">Cari Data Anda</label>
+            <input id="cari" class="input" name="kodeUnik" th:value="*{kodeUnik}" type="text"
+                   placeholder="Gunakan Kode Pada Saat Pendaftaran">
+            <img class="icon-search" src="/static/img/search.png">
+            <div class="form-btn">
+                <input class="btn-cari"
+                       type="submit" value="Cari">
+            </div>
+        </form>
+        <div th:each="p :${peserta}">
+            <table class="peserta-detail">
+                <tr>
+                    <th>Nama Lengkap</th>
+                    <th>:</th>
+                    <td th:text="${p.nama}"></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <th>:</th>
+                    <td th:text="${p.email}"></td>
+                </tr>
+                <tr>
+                    <th>Pekerjaan</th>
+                    <th>:</th>
+                    <td th:text="${p.pekerjaan}"></td>
+                </tr>
+                <tr>
+                    <th>Asal Instansi</th>
+                    <th>:</th>
+                    <td th:text="${p.asalInstansi}"></td>
+                </tr>
+                <tr>
+                    <th>Judul Workshop</th>
+                    <th>:</th>
+                    <td th:text="${p.judulWorkshop}"></td>
+                </tr>
+                <tr>
+                    <th>Kode Absensi</th>
+                    <th>:</th>
+                    <td th:text="${p.kodeUnik}"></td>
+                </tr>
+            </table>
+            <form th:action="@{/absensi/formAbsensi/inputAbsensi/{kodeUnik} (kodeUnik=${p.kodeUnik})}"
+                  th:object="${formAbsensi}"
+                  method="post"
+                  class="form-absensi">
+                <div class="form-input">
+                    <label for="kesan" class="text-label">Kesan*</label>
+                    <input id="kesan" th:value="*{kesan}" type="text" name="kesan"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Kesan Anda Selama Mengikuti Workshop">
+                    <p th:errors="${kesan}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('kesan')}"></p>
+                </div>
+                <div class="form-input2">
+                    <label for="pesan" class="text-label">Pesan*</label>
+                    <input id="pesan" th:value="*{pesan}" type="text" name="pesan"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Pesan Untuk Workshop Selanjutnya">
+                    <p th:errors="${pesan}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('pesan')}"></p>
+                </div>
+                <div class="form-btn">
+                    <input class="btn-submit"
+                           type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer-page">
+    <img class="logo-footer" src="/static/img/logo.png"/>
+    <div class="bagian">
+        <div class="isi">Alamat</div>
+        <div class="sub-alamat">Jl. Perbanas No.16, RT.16/RW.7, Karet Kuningan, Jakarta Selatan. (Ruang 2405)</div>
+    </div>
+    <div class="bagian">
+        <div class="isi">Contact</div>
+        <div class="sub-isi">WhatsApp:<br/>081382683943 (Humas HIMATIKA)</div>
+    </div>
+    <div class="bagian">
+        <div class="isi">Social Media</div>
+        <div class="sosmed">
+            <img class="icon" src="/static/img/instagram.png"/>
+            <div class="sub-isi">himatikaperbanas</div>
+        </div>
+        <div class="sosmed">
+            <img class="icon" src="/static/img/linkedin.png"/>
+            <div class="sub-isi">HIMATIKA Perbanas Institute</div>
+        </div>
+        <div class="sosmed">
+            <img class="icon" src="/static/img/email.png"/>
+            <div class="sub-isi">himatika@perbanas.id</div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

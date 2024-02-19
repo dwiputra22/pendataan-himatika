@@ -1,0 +1,144 @@
+.page-workshop,
+.page-workshop * {
+  box-sizing: border-box;
+}
+.page-workshop {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.navbar-page {
+  background: #1c53a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  position: relative;
+  inset: 0px;
+}
+
+.navbar-items {
+  display: block;
+  padding-right: 75px;
+  padding-left: 10px;
+
+}
+
+.title-navbar {
+  padding: 5px 10px 5px 10px;
+  font: 800 18px "Nunito", sans-serif;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.title-navbar:hover {
+  background-color: #FFFFFF60;
+  border-radius: 5px;
+}
+
+.footer-page {
+  background: #1c53a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 210px;
+  margin-top: 27px;
+  position: relative;
+
+}
+
+.logo-footer {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 100px;
+}
+
+.bagian {
+    display: grid;
+    margin: 0px 20px 0px 10px;
+    position: relative;
+    left: 180px;
+}
+
+.isi {
+    font: 800 18px "Nunito", sans-serif;
+    color: #ffffff;
+}
+
+.sub-alamat {
+    font: 100 13px "Nunito", sans-serif;
+    color: #ffffff;
+    width: 400px;
+}
+
+.sub-isi {
+    font: 100 13px "Nunito", sans-serif;
+    color: #ffffff;
+    width: 240px;
+}
+
+.sosmed {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.body-workshop {
+    display: grid;
+    position: relative;
+    justify-items: center;
+    align-items: center;
+    left: 0px;
+    padding-bottom: 30px;
+    justify-content: center;
+}
+
+.rectangle-1 {
+  background: #bad5fe;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 350px;
+  height: 200px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+
+.text-label {
+  position: absolute;
+  top: 20px;
+  color: #1053a9;
+  font: 800 25px/30px "Nunito", sans-serif;
+}
+
+.judul-workshop {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: #1053a9;
+  font: 800 17px/20px "Nunito", sans-serif;
+}
+
+.poster {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 9px;
+}
+
+.cek-detail {
+    position: absolute;
+    bottom: 10px;
+}

@@ -1,0 +1,186 @@
+.page-detailWorkshop,
+.page-detailWorkshop * {
+  box-sizing: border-box;
+}
+.page-detailWorkshop {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.navbar-page {
+  background: #1c53a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  position: relative;
+  inset: 0px;
+}
+
+.navbar-items {
+  display: block;
+  padding-right: 75px;
+  padding-left: 10px;
+
+}
+
+.title-navbar {
+  padding: 5px 10px 5px 10px;
+  font: 800 18px "Nunito", sans-serif;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.title-navbar:hover {
+  background-color: #FFFFFF60;
+  border-radius: 5px;
+}
+
+.footer-page {
+  background: #1c53a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 210px;
+  margin-top: 27px;
+  position: relative;
+
+}
+
+.logo-footer {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 100px;
+}
+
+.bagian {
+    display: grid;
+    margin: 0px 20px 0px 10px;
+    position: relative;
+    left: 180px;
+}
+
+.isi {
+    font: 800 18px "Nunito", sans-serif;
+    color: #ffffff;
+}
+
+.sub-alamat {
+    font: 100 13px "Nunito", sans-serif;
+    color: #ffffff;
+    width: 400px;
+}
+
+.sub-isi {
+    font: 100 13px "Nunito", sans-serif;
+    color: #ffffff;
+    width: 240px;
+}
+
+.sosmed {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.body-workshop {
+    display: grid;
+    position: relative;
+    justify-items: center;
+    align-items: center;
+    padding-top: 70px;
+    padding-bottom: 30px;
+    justify-content: center;
+}
+
+.rectangle-1 {
+  background: #bad5fe;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 980px;
+  height: 400px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+
+.text-label {
+  position: absolute;
+  top: 20px;
+  color: #1053a9;
+  font: 800 25px/30px "Nunito", sans-serif;
+}
+
+.judul-workshop {
+    position: absolute;
+    top: 30px;
+    left: 330px;
+    color: #1053a9;
+    font: 800 20px/20px "Nunito", sans-serif;
+}
+
+.description {
+    position: absolute;
+    width: 500px;
+    top: 60px;
+    left: 330px;
+    color: #1053a9;
+    font: 800 12px/20px "Nunito", sans-serif;
+}
+
+.date {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    bottom: 35px;
+    left: 80px;
+}
+
+.clock {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    bottom: 71px;
+    left: 80px;
+}
+
+.tgl-workshop {
+    position: absolute;
+    width: 135px;
+    bottom: 15px;
+    left: 122px;
+    color: #44474b;
+    font: 800 16px/35px "Nunito", sans-serif;
+}
+
+.poster {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    top: 30px;
+    left: 40px;
+    border-radius: 9px;
+}
+
+.daftar {
+    position: absolute;
+    background-color: #1053a9;
+    font: 800 14px "Nunito", sans-serif;
+    bottom: 45px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+}

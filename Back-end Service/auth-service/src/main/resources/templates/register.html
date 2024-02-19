@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="/static/css/registrasi.css">
+    <link rel="icon" type="image/png" href="/static/img/logo.png"/>
     <title>Registration</title>
 </head>
 <body>
@@ -80,9 +81,9 @@
                         th:errorClass="is-invalid"
                         placeholder="Pilih Divisi Anda">
                     <option value="" disabled selected>Pilih Divisi Anda</option>
-                    <option value="psdm">PSDM</option>
-                    <option value="ristek">Ristek</option>
-                    <option value="humas">Humas</option>
+                    <option value="PSDM">PSDM</option>
+                    <option value="Ristek">Ristek</option>
+                    <option value="Humas">Humas</option>
                 </select>
                 <p th:errors="*{divisi}" class="invalid-feedback"
                    th:if="${#fields.hasErrors('divisi')}"></p>
@@ -95,8 +96,8 @@
                         th:errorClass="is-invalid"
                         placeholder="Pilih Jabatan Anda">
                     <option value="" disabled selected>Pilih Jabatan Anda</option>
-                    <option value="koordinator">Koordinator</option>
-                    <option value="staff">Staff</option>
+                    <option value="Koordinator">Koordinator</option>
+                    <option value="Staff">Staff</option>
                 </select>
                 <p th:errors="*{jabatan}" class="invalid-feedback"
                    th:if="${#fields.hasErrors('jabatan')}"></p>

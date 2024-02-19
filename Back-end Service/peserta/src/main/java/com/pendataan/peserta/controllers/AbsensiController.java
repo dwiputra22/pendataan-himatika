@@ -1,8 +1,7 @@
 package com.pendataan.peserta.controllers;
 
-import com.pendataan.peserta.entity.AbsensiWorkshop;
+import com.pendataan.peserta.entity.PesertaWorkshop;
 import com.pendataan.peserta.services.AbsensiService;
-import com.pendataan.workshop.entity.ProposalWorkshop;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +18,23 @@ public class AbsensiController {
     private AbsensiService absensiService;
 
     @GetMapping("/absensi")
-    public ResponseEntity getAbsensi(String judulWorkshop, ProposalWorkshop proposalWorkshop) {
-        return absensiService.getAbsensi(judulWorkshop, proposalWorkshop);
+    public ModelAndView getPage() {
+        return absensiService.getPage();
+    }
+
+    @GetMapping(path = "/absensi/get")
+    public ModelAndView findAbsensi(@RequestParam(value = "judulWorkshop") String judulWorkshop) {
+        return absensiService.findAbsensi(judulWorkshop);
+    }
+
+    @GetMapping("/absensiDetail")
+    public ResponseEntity getAbsensi(String judulWorkshop) {
+        return absensiService.getAbsensi(judulWorkshop);
     }
 
     @GetMapping("/absensi/{judulWorkshop}")
-    public ResponseEntity<?> getAbsensiByJudul(@PathVariable("judulWorkshop") String judulWorkshop) {
+    public ModelAndView getAbsensiByJudul(@PathVariable("judulWorkshop") String judulWorkshop) {
         return absensiService.getAbsensiByJudul(judulWorkshop);
-    }
-
-    @GetMapping("/absensi/{judulWorkshop}/formAbsensi")
-    public ModelAndView formAbsensi(AbsensiWorkshop absensi,
-                                    @PathVariable("judulWorkshop") String judulWorkshop) {
-        return absensiService.formAbsensi(absensi, judulWorkshop);
-    }
-
-    @PostMapping("/absensi/{judulWorkshop}/formAbsensi/inputAbsensi")
-    public ResponseEntity<?> inputAbsensi(@PathVariable("judulWorkshop") String judulWorkshop,
-                                          @RequestBody AbsensiWorkshop absensi) {
-        return absensiService.uploadAbsensi(judulWorkshop, absensi);
     }
 
     @GetMapping(path = "/absensi/{judulWorkshop}/editAbsensi/{id}")
@@ -51,8 +48,8 @@ public class AbsensiController {
             @PathVariable("id") Long id,
             @PathVariable("judulWorkshop") String judulWorkshop,
             HttpServletResponse response,
-            AbsensiWorkshop absensi) throws IOException {
-        return absensiService.updateAbsensi(id, judulWorkshop, response, absensi);
+            PesertaWorkshop peserta) throws IOException {
+        return absensiService.updateAbsensi(id, judulWorkshop, response, peserta);
     }
 
     @GetMapping(path = "/absensi/{judulWorkshop}/deleteAbsensi/{id}")

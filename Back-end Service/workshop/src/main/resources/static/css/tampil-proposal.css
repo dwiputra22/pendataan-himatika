@@ -1,0 +1,337 @@
+.proposal,
+.proposal * {
+  box-sizing: border-box;
+}
+.proposal {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+.rectangle-7 {
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.sidebar {
+  background: #1c53a5;
+  border-radius: 0px 25px 25px 0px;
+  width: 320px;
+  height: 100%;
+  position: absolute;
+  inset: 0px;
+  left: 0px;
+  top: 0px;
+  box-shadow: inset 0px 6px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.dokumen {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dokumen li {
+  margin-bottom: 5px;
+}
+
+.dokumen a {
+  display: block;
+  color: #ffffff;
+  font: 800 18px "Nunito", sans-serif;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.dokumen a:hover {
+  background-color: #FFFFFF60;
+  border-radius: 10px;
+}
+
+.logout {
+  width: 140px;
+  height: 35px;
+  position: static;
+}
+.logout2 {
+  text-decoration: none;
+  color: #ffffff;
+  text-align: left;
+  font: 750 18px "Nunito", sans-serif;
+  position: absolute;
+  left: 85px;
+  top: 560px;
+}
+.logout-icon {
+  position: absolute;
+  height: 25px;
+  width: 28px;
+  left: 50px;
+  top: 558px;
+  overflow: visible;
+}
+
+
+.btnworkshop {
+    position: absolute;
+    top: 0px;
+    right: 38px;
+}
+
+.peserta-workshop {
+  text-align: left;
+  position: relative;
+  left: 50px;
+  top: 250px;
+  width: 250px;
+}
+
+.workshop {
+  text-align: left;
+  position: relative;
+  left: 50px;
+  top: 245px;
+  width: 250px;
+}
+
+.list-menu {
+    position: relative;
+    left: 20px;
+    width: 230px;
+    border-radius: 10px;
+}
+
+
+.anggota2 {
+  width: 111px;
+  height: 35px;
+  position: static;
+}
+
+.anggota {
+  text-align: left;
+  position: absolute;
+  left: 50px;
+  top: 200px;
+  width: 250px;
+}
+.dashboard3 {
+  width: 179px;
+  height: 35px;
+  position: static;
+}
+
+.dashboard2 {
+  text-align: left;
+  position: absolute;
+  left: 50px;
+  top: 160px;
+  width: 250px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 100px;
+  top: 40px;
+}
+
+.rectangle-1 {
+    background: #bad5fe;
+    border-radius: 10px;
+    width: 770px;
+    height: 350px;
+    position: absolute;
+    left: 420px;
+    top: 120px;
+    box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+
+.detail-name {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: rgb(16, 83, 169);
+    font: 800 25px Nunito, sans-serif;
+}
+
+.workshop-name {
+    color: rgb(16, 83, 169);
+    font: 18px Nunito, sans-serif;
+}
+
+.nama-workshop {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+}
+
+.judul {
+    position: absolute;
+    top: 50px;
+    left: 180px;
+}
+
+.proposal-detail {
+    position: absolute;
+    top: 90px;
+    left: 20px;
+    color: rgb(16, 83, 169);
+}
+
+.proposal-detail th {
+    font: 800 18px Nunito, sans-serif;
+    padding-left: 20px;
+    padding-top: 3px;
+}
+
+.proposal-detail td {
+    font: 500 18px Nunito, sans-serif;
+    padding-left: 5px;
+}
+
+.input-proposal {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    background-color: #1053a9;
+    color: #fff;
+    text-align: center;
+    font: 800 13px "Nunito", sans-serif;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.button {
+    position: absolute;
+    bottom: 60px;
+    left: 230px;
+}
+
+.btn-download {
+    background-color: #1053a9;
+    color: #fff;
+    text-align: center;
+    font: 800 13px "Nunito", sans-serif;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.btn-edit {
+    background-color: yellow;
+    color: #1053a9;
+    text-align: center;
+    font: 800 13px "Nunito", sans-serif;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.btn-delete {
+    background-color: red;
+    color: #fff;
+    text-align: center;
+    font: 800 13px "Nunito", sans-serif;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.circle-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #1053A9;
+      border: none;
+      display: flex;
+      position: absolute;
+      cursor: pointer;
+      top: 20px;
+      right: 20px;
+      align-items: center;
+      justify-content: center;
+}
+
+.plus-icon {
+  width: 24px;
+  height: 24px;
+  display: contents;
+}
+
+.plus-icon::before,
+.plus-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 10px;
+  height: 20px;
+  width: 6px;
+  background-color: #ffff;
+}
+
+.plus-icon::before {
+  transform: rotate(45deg);
+}
+
+.plus-icon::after {
+  transform: rotate(135deg);
+}
+
+.text-label {
+  position: relative;
+  top: 40px;
+  color: #1053a9;
+  font: 800 15px/30px "Nunito", sans-serif;
+}
+
+.form-input {
+    display: grid;
+    justify-content: center;
+    margin-top: -30px;
+    padding-bottom: 30px;
+}
+
+.input {
+  border-radius: 10px;
+  box-shadow-width: 1px;
+  box-shadow: 0px 0px 0px 1px rgba(16, 83, 169, 1) inset;
+  background-color: white;
+  filter: drop-shadow(0px 4px 4px rgba(115, 152, 248, 0.71));
+  box-sizing: border-box;
+  border-style: none;
+  height: 40px;
+  width: 400px;
+  padding-left: 5px;
+  margin-top: 40px;
+  color: #757575;
+  font: 400 15px/30px "Nunito", sans-serif;
+}
+
+.btn {
+position: absolute;
+}
+
+.btn-submit {
+    border-radius: 10px;
+    background-color: rgba(27, 72, 186, 1);
+    border-style: none;
+    border: none;
+    height: 40px;
+    width: 250px;
+    color: #ffff;
+    text-align: center;
+    position: relative;
+    top: 50px;
+    font-size: 15px;
+    font-family: Nunito;
+}
+
+

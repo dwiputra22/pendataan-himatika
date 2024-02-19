@@ -69,8 +69,8 @@ public class AnggotaService implements UserDetailsService {
         return token;
     }
 
-    public int enableUsers(String email) {
-        return anggotaRepository.enableUsers(email);
+    public int enableUsers(String nim) {
+        return anggotaRepository.enableUsers(nim);
     }
     public ModelAndView getAllUsers() {
         ModelAndView mav = new ModelAndView();

@@ -1,11 +1,10 @@
 package com.pendataan.workshop.services;
 
-import com.pendataan.workshop.dto.ApplicationCode;
-import com.pendataan.workshop.dto.PaginatedResponse;
-import com.pendataan.workshop.dto.ResponseStatus;
-import com.pendataan.workshop.dto.StatusWorkshop;
+import com.pendataan.workshop.dto.*;
+import com.pendataan.workshop.entity.CustomLog;
 import com.pendataan.workshop.entity.ProposalWorkshop;
 import com.pendataan.workshop.entity.Workshop;
+import com.pendataan.workshop.repositories.CustomLogRepository;
 import com.pendataan.workshop.repositories.PropWorkshopRepository;
 import com.pendataan.workshop.repositories.WorkshopRepository;
 import lombok.AllArgsConstructor;
@@ -43,25 +42,29 @@ public class ProposalService {
     public final String uploadDirectory = System.getProperty("user.dir") + "/files/proposal-workshop";
     private final PropWorkshopRepository propWorkshopRepository;
     private final WorkshopRepository workshopRepository;
+    private final CustomLogRepository logInfoRepository;
 
 
-    public ModelAndView pageProposal() {
+    public ModelAndView pageProposal(Long workshopId) {
         ModelAndView mav = new ModelAndView();
-        List<Workshop> workshop = workshopRepository.findAll();
+        ProposalWorkshop proposal = propWorkshopRepository.getByWorkshopId(workshopId);
+        List<Workshop> workshop = workshopRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         mav.getModelMap().addAttribute("workshop", workshop);
+        mav.getModelMap().addAttribute("proposal", proposal);
         mav.setViewName("proposalWorkshop");
         return mav;
     }
 
-    public PaginatedResponse<List<ProposalWorkshop>> getAllProposal(int page, int size) {
+    public PaginatedResponse<List<Workshop>> getAllProposal(int page, int size) {
         Page<Workshop> workshop = workshopRepository.findAll(PageRequest.of(page, size,
                 Sort.by(Sort.Direction.DESC, "id")));
 
-        return PaginatedResponse.<List<ProposalWorkshop>>builder()
+        return PaginatedResponse.<List<Workshop>>builder()
                 .responseStatus(new ResponseStatus(ApplicationCode.SUCCESS))
                 .data(workshop.stream()
-                        .map(ProposalWorkshop::new)
+                        .map(Workshop::new)
                         .collect(Collectors.toList()))
+
                 .detailPages(PaginatedResponse.PagingMetadata.builder()
                         .page(workshop.getNumber() + 1)
                         .rowPerPage(size)
@@ -80,7 +83,9 @@ public class ProposalService {
 
     public ModelAndView getProposal(Long workshopId) {
         ModelAndView mav = new ModelAndView();
-        ProposalWorkshop proposal = propWorkshopRepository.getById(workshopId);
+        ProposalWorkshop proposal = propWorkshopRepository.getByWorkshopId(workshopId);
+        Workshop workshop = workshopRepository.getById(workshopId);
+        mav.getModelMap().addAttribute("workshop", workshop);
         mav.getModelMap().addAttribute("proposal", proposal);
         mav.setViewName("tampilProposal");
         return mav;
@@ -107,7 +112,7 @@ public class ProposalService {
                 stream.write(suratProposal.getBytes());
                 stream.close();
             } catch (Exception e) {
-                log.info("in catch");
+                log.info("Folder Has Been Created");
                 e.printStackTrace();
             }
 
@@ -142,6 +147,14 @@ public class ProposalService {
                 return propWorkshopRepository.save(proposalWorkshop);
             });
             if (propWorkshop.isPresent()) {
+                Workshop workshop = workshopRepository.getById(workshopId);
+                CustomLog customLog = new CustomLog();
+                customLog.setNim(proposalWorkshop.getNim());
+                customLog.setNama(proposalWorkshop.getNama());
+                customLog.setJudulWorkshop(workshop.getJudulWorkshop());
+                customLog.setAktivitas(StatusCustomLog.CREATED_PROPOSAL.toString());
+                customLog.setTanggal(LocalDateTime.now());
+                logInfoRepository.save(customLog);
                 response.sendRedirect("/himatika/proposal-workshop");
                 return new ResponseEntity<>("Berhasil Upload Proposal", HttpStatus.OK);
             }
@@ -168,8 +181,8 @@ public class ProposalService {
         return mav;
     }
 
-    public ResponseEntity<byte[]> downloadProposal(Long id, String docName) {
-        Optional<ProposalWorkshop> file = propWorkshopRepository.findByDocName(id, docName);
+    public ResponseEntity<byte[]> downloadProposal(String docName) {
+        Optional<ProposalWorkshop> file = propWorkshopRepository.findByDocName(docName);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + docName)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -177,14 +190,39 @@ public class ProposalService {
                 .body(file.get().getProposalByte());
     }
 
+    public ModelAndView formDelete(Long id) {
+        ModelAndView mav = new ModelAndView();
+        CustomLog customLog = new CustomLog();
+        propWorkshopRepository.getByWorkshopId(id);
+
+        mav.getModelMap().addAttribute("customLog", customLog);
+        mav.setViewName("tampilProposal");
+        return mav;
+    }
+
     public ResponseEntity<?> deletedProposal(Long id,
-                                             String fileName,
+                                             CustomLog logInfo,
                                              HttpServletResponse response) {
+        ProposalWorkshop proposal = propWorkshopRepository.getByWorkshopId(id);
+        String fileName = proposal.getDocName();
         String path = uploadDirectory + "/" + fileName;
         File file = new File(path);
+        CustomLog customLog = new CustomLog();
+        customLog.setNim(logInfo.getNim());
+        customLog.setNama(logInfo.getNama());
+        customLog.setAktivitas(StatusCustomLog.DELETED_PROPOSAL.toString());
+        customLog.setTanggal(LocalDateTime.now());
         try {
             if (id != null) {
                 propWorkshopRepository.deleteByWorkshopId(id);
+
+                Workshop workshop = workshopRepository.getById(id);
+                workshop.setStatus(StatusWorkshop.CREATED.toString());
+                workshopRepository.save(workshop);
+
+                customLog.setJudulWorkshop(workshop.getJudulWorkshop());
+                logInfoRepository.save(customLog);
+
                 String pathFile = uploadDirectory + "/" + fileName;
                 System.out.println("Path=" + pathFile);
                 File fileToDelete = new File(pathFile);
@@ -219,6 +257,7 @@ public class ProposalService {
                                                           HttpServletResponse response,
                                                           ProposalWorkshop proposalWorkshop) throws IOException {
         ProposalWorkshop propWorkshop = propWorkshopRepository.getById(id);
+        Workshop workshop = workshopRepository.getById(id);
 //        Workshop getId = workshopRepository.getReferenceById(workshopId);
 
         String fileName = StringUtils.cleanPath(suratProposal.getOriginalFilename());
@@ -232,6 +271,15 @@ public class ProposalService {
         propWorkshop.setUpdatedDate(LocalDateTime.now());
 
         propWorkshopRepository.save(propWorkshop);
+
+        CustomLog customLog = new CustomLog();
+        customLog.setNim(proposalWorkshop.getNim());
+        customLog.setNama(proposalWorkshop.getNama());
+        customLog.setJudulWorkshop(workshop.getJudulWorkshop());
+        customLog.setAktivitas(StatusCustomLog.UPDATE_PROPOSAL.toString());
+        customLog.setTanggal(LocalDateTime.now());
+        logInfoRepository.save(customLog);
+
         response.sendRedirect("/himatika/proposal-workshop");
         return new ResponseEntity<>("Berhasil Memperbarui Proposal", HttpStatus.OK);
     }

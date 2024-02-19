@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pendaftaran</title>
+    <link href="/static/css/form-pendaftaran.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
+    <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito@800&display=swap"/>
+    <link rel="icon" type="image/png" href="/static/img/logo.png"/>
+    <script type="text/javascript" src="/static/js/formAbsensi.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="page-form">
+    <nav class="navbar-page navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="navbar-items">
+                        <a class="title-navbar" th:href="@{/}">BERANDA</a>
+                    </li>
+                    <li class="navbar-items">
+                        <a class="title-navbar" th:href="@{/list-workshop}">WORKSHOP</a>
+                    </li>
+                    <li class="navbar-items dropdown">
+                        <a class="title-navbar dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            FORM
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="title-navbar dropdown-item-customblue" th:href="@{/pendaftaran/formPendaftaran}">Pendaftaran Workshop</a></li>
+                            <li><a class="title-navbar dropdown-item-customblue" th:href="@{/absensi/formAbsensi}">Absensi Workshop</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="body-pendaftaran">
+        <div class="rectangle-1">
+            <form th:action="@{/pendaftaran/formPendaftaran/inputPendaftaran}"
+                  th:object="${formPendaftaran}"
+                  method="post"
+                  class="form-pendaftaran">
+                <div class="form-input">
+                    <label for="nama" class="text-label">Nama Lengkap*</label>
+                    <input id="nama" th:value="*{nama}" type="text" name="nama"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Nama Lengkap Anda">
+                    <p th:errors="${nama}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('nama')}"></p>
+                </div>
+                <div class="form-input">
+                    <label for="email" class="text-label">Email*</label>
+                    <input id="email" th:value="*{email}" type="email" name="email"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Email Anda">
+                    <p th:errors="${email}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('email')}"></p>
+                </div>
+                <div class="form-input">
+                    <label for="asalInstansi" class="text-label">Asal Instansi*</label>
+                    <input id="asalInstansi" th:value="*{asalInstansi}" type="text" name="asalInstansi"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Asal Instansi Anda">
+                    <p th:errors="${asalInstansi}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('asalInstansi')}"></p>
+                </div>
+                <div class="form-input4">
+                    <label for="judulWorkshop" class="text-label">Workshop Yang Diikuti*</label>
+                    <select id="judulWorkshop" th:value="*{judulWorkshop}" type="text" name="judulWorkshop"
+                            th:errorClass="is-invalid"
+                            th:each="w :${workshop}"
+                            class="input-judul"
+                            placeholder="Masukkan Judul Workshop">
+                        <option value="" disabled selected>Pilih Judul Workshop</option>
+                        <option th:each="w :${workshop}" th:value="${w.judulWorkshop}" th:text="${w.judulWorkshop}"></option>
+                    </select>
+                    <p th:errors="${judulWorkshop}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('judulWorkshop')}"></p>
+                </div>
+                <div class="form-input2">
+                    <label for="pekerjaan" class="text-label">Pekerjaan*</label>
+                    <input id="pekerjaan" th:value="*{pekerjaan}" type="text" name="pekerjaan"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Pekerjaan Anda">
+                    <p th:errors="${pekerjaan}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('pekerjaan')}"></p>
+                </div>
+                <div class="form-input2">
+                    <label for="asalInfo" class="text-label">Dari Mana Anda Mengetahui Workshop Kami?*</label>
+                    <input id="asalInfo" th:value="*{asalInfo}" type="text" name="asalInfo"
+                           th:errorClass="is-invalid"
+                           class="input"
+                           placeholder="Masukkan Info Workshop">
+                    <p th:errors="${asalInfo}" class="invalid-feedback"
+                       th:if="${#fields.hasErrors('asalInfo')}"></p>
+                </div>
+                <div class="form-btn">
+                    <input class="btn-submit"
+                           type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="footer-page">
+        <img class="logo-footer" src="/static/img/logo.png"/>
+        <div class="bagian">
+            <div class="isi">Alamat</div>
+            <div class="sub-alamat">Jl. Perbanas No.16, RT.16/RW.7, Karet Kuningan, Jakarta Selatan. (Ruang 2405)</div>
+        </div>
+        <div class="bagian">
+            <div class="isi">Contact</div>
+            <div class="sub-isi">WhatsApp:<br />081382683943 (Humas HIMATIKA)</div>
+        </div>
+        <div class="bagian">
+            <div class="isi">Social Media</div>
+            <div class="sosmed">
+                <img class="icon" src="/static/img/instagram.png"/>
+                <div class="sub-isi">himatikaperbanas</div>
+            </div>
+            <div class="sosmed">
+                <img class="icon" src="/static/img/linkedin.png"/>
+                <div class="sub-isi">HIMATIKA Perbanas Institute</div>
+            </div>
+            <div class="sosmed">
+                <img class="icon" src="/static/img/email.png"/>
+                <div class="sub-isi">himatika@perbanas.id</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

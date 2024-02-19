@@ -1,7 +1,9 @@
 package com.pendataan.workshop.controllers;
 
 import com.pendataan.workshop.dto.PaginatedResponse;
+import com.pendataan.workshop.entity.CustomLog;
 import com.pendataan.workshop.entity.ProposalWorkshop;
+import com.pendataan.workshop.entity.Workshop;
 import com.pendataan.workshop.services.ProposalService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -24,8 +26,8 @@ public class ProposalController {
     private static final Logger log = LoggerFactory.getLogger(ProposalController.class);
 
     @GetMapping(path = "/proposal-workshop")
-    public ModelAndView showAllProposal() {
-        return proposalService.pageProposal();
+    public ModelAndView showAllProposal(Long workshopId) {
+        return proposalService.pageProposal(workshopId);
     }
 
     @GetMapping(path = "/proposal-workshop/get")
@@ -33,8 +35,8 @@ public class ProposalController {
         return proposalService.getWorkshop(judulWorkshop);
     }
 
-    @GetMapping(path = "/proposal-workshop/{page}/{size}")
-    public ResponseEntity<PaginatedResponse<List<ProposalWorkshop>>> showAllProposal(
+    @GetMapping(path = "/proposal-workshop/paginated")
+    public ResponseEntity<PaginatedResponse<List<Workshop>>> showAllProposal(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "9") int size
     ) {
@@ -62,21 +64,26 @@ public class ProposalController {
         return proposalService.uploadProposal(workshopId, propWorkshop, suratProposal, response);
     }
 
-    @GetMapping(path = "/proposal-workshop/{id}/download/{docName}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable("id") Long id,
-                                               @PathVariable("docName") String docName) {
+    @GetMapping(path = "/proposal-workshop/download/{docName}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("docName") String docName) {
 //        byte[] fileProposal = proposalService.downloadProposal(docName);
 //        return ResponseEntity.status(HttpStatus.OK)
 //                .contentType(MediaType.valueOf("application/pdf"))
 //                .body(fileProposal);
-        return proposalService.downloadProposal(id, docName);
+        return proposalService.downloadProposal(docName);
     }
 
     @GetMapping(path = "/proposal-workshop/deleteProposal/{id}")
+    public ModelAndView formProposal(@PathVariable("id") Long id)
+            throws IOException {
+        return proposalService.formDelete(id);
+    }
+
+    @GetMapping(path = "/proposal-workshop/deleteProposal/{id}/deleted")
     public @ResponseBody ResponseEntity<?> deleteProposal(@PathVariable("id") Long id,
-                                                          String fileName,
+                                                          CustomLog logInfo,
                                                           HttpServletResponse response) {
-        return proposalService.deletedProposal(id, fileName, response);
+        return proposalService.deletedProposal(id, logInfo, response);
     }
 
     @GetMapping(path = "/proposal-workshop/editProposal/{id}")

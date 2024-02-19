@@ -27,34 +27,38 @@ public class DokumentasiController {
         return dokumentasiService.getAllDokumentasi();
     }
 
+    @GetMapping(path = "/dokumentasi/get")
+    public ModelAndView findDokumentasi(@RequestParam(value = "judulWorkshop") String judulWorkshop) {
+        return dokumentasiService.findDokumentasi(judulWorkshop);
+    }
+
     @GetMapping(path = "/dokumentasi/{workshopId}")
-    public ModelAndView showProposal(@PathVariable("workshopId") Long workshopId) {
+    public ModelAndView showDokumentasi(@PathVariable("workshopId") Long workshopId) {
         return dokumentasiService.getDokumentasi(workshopId);
     }
 
     @GetMapping("/dokumentasi/{workshopId}/input-dokumentasi")
-    public ModelAndView formProposal(@PathVariable("workshopId") Long workshopId)
+    public ModelAndView formDokumentasi(@PathVariable("workshopId") Long workshopId)
             throws IOException {
         return dokumentasiService.formDokumentasi(workshopId);
     }
 
-    @RequestMapping("/dokumentasi/{workshopId}/input-dokumentasi/upload")
-    public ResponseEntity<?> uploadDokumen(DokumentasiWorkshop dokumentasiWorkshop,
-                                           @RequestParam("file") MultipartFile fileDokumentasi,
+    @PostMapping("/dokumentasi/{workshopId}/input-dokumentasi/upload")
+    public ResponseEntity<?> uploadDokumen(@ModelAttribute DokumentasiWorkshop dokumentasiWorkshop,
+                                           @RequestParam("fileDokumentasi") MultipartFile fileDokumentasi,
                                            @PathVariable("workshopId") Long workshopId,
                                            HttpServletResponse response)
             throws IOException {
         return dokumentasiService.upload(dokumentasiWorkshop, fileDokumentasi, workshopId, response);
     }
 
-    @GetMapping(path = "/dokumentasi/{id}/download/{docName}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable("id") Long id,
-                                               @PathVariable("docName") String docName) {
+    @GetMapping(path = "/dokumentasi/show/{docName}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("docName") String docName) {
 //        byte[] fileProposal = proposalService.downloadProposal(docName);
 //        return ResponseEntity.status(HttpStatus.OK)
 //                .contentType(MediaType.valueOf("application/pdf"))
 //                .body(fileProposal);
-        return dokumentasiService.downloadDokumentasi(id, docName);
+        return dokumentasiService.showImage(docName);
     }
 
     @RequestMapping("/dokumentasi/edit-dokumentasi/{id}")
@@ -70,10 +74,11 @@ public class DokumentasiController {
         return dokumentasiService.update(id, dok, fileDokumentasi, response);
     }
 
-    @RequestMapping("/dokumentasi/delete-dokumentasi/{id}")
+    @RequestMapping("/dokumentasi/{workshopId}/delete-dokumentasi/{id}/{fileName}")
     public ResponseEntity<?> deleteDokumentasi(@PathVariable("id") Long id,
-                                               String fileName,
+                                               @PathVariable("workshopId") Long workshopId,
+                                               @PathVariable("fileName") String fileName,
                                                HttpServletResponse response) {
-        return dokumentasiService.delete(id, fileName, response);
+        return dokumentasiService.delete(id, workshopId, fileName, response);
     }
 }

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokumentasi Workshop</title>
+    <link href="/static/css/dokumentasiWorkshop.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
+    <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito@800&display=swap"/>
+    <link rel="icon" type="image/png" href="/static/img/logo.png"/>
+    <script type="text/javascript" src="/static/js/dokumentasi.js"></script>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="dokumentasi">
+    <div class="rectangle-7"></div>
+
+    <div class="sidebar">
+
+        <img class="logo" src="/static/img/logo.png"/>
+
+        <ul class="dokumen">
+            <li class="dashboard2">
+                <a class="list-hover" th:href="@{http://localhost:8081/himatika}">Dashboard</a>
+            </li>
+
+            <li class="anggota">
+                <a class="list-hover" th:href="@{http://localhost:8080/himatika/anggota}">Anggota</a>
+            </li>
+
+            <li class="workshop mb-1">
+                <a class="list-hover" th:href="@{http://localhost:8081/himatika/workshop}">Workshop</a>
+                <div class="btnworkshop">
+                    <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                            data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                    </button>
+                </div>
+
+                <div class="collapse" id="home-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <a th:href="@{http://localhost:8081/himatika/proposal-workshop}" class="list-menu">Proposal</a>
+                        </li>
+                        <li>
+                            <a th:href="@{http://localhost:8081/himatika/lpj-workshop}"
+                               class="list-menu rounded">Lpj</a></li>
+                        <li>
+                            <a th:href="@{http://localhost:8081/himatika/dokumentasi}" class="list-menu">Dokumentasi</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="peserta-workshop mb-1">
+                <a class="list-hover">Peserta Workshop</a>
+                <div class="btnworkshop">
+                    <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                            data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                    </button>
+                </div>
+                <div class="collapse" id="dashboard-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <a th:href="@{http://localhost:8082/himatika/pendaftaran}" class="list-menu">Pendaftaran Peserta</a>
+                        </li>
+                        <li>
+                            <a th:href="@{http://localhost:8082/himatika/absensi}" class="list-menu">Absensi Peserta</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+        </ul>
+
+        <div class="logout">
+            <img class="logout-icon" src="/static/img/logout.png">
+            <a class="logout2" th:href="@{http://localhost:8080/logout}">Logout</a>
+        </div>
+    </div>
+
+    <div class="rectangle">
+        <div class="title-dokumentasi">Dokumentasi</div>
+        <div class="card-container" th:each="w :${workshop}">
+            <form class="search" th:action="@{/himatika/dokumentasi/get}">
+                <input class="input-search" name="judulWorkshop" th:value="*{judulWorkshop}" type="text">
+                <img class="icon-search" src="/static/img/search.png">
+            </form>
+            <div class="rectangle-2" th:each="w :${workshop}">
+                <a class="judul-workshop" th:text="${w.judulWorkshop}"
+                   th:href="@{/himatika/dokumentasi/{workshopId}(workshopId=${w.id})}">
+                </a>
+            </div>
+        </div>
+        <a class="previous">&#8249;&#8249;</a>
+        <a class="next">&#8250;&#8250;</a>
+    </div>
+</div>
+</body>
+</html>

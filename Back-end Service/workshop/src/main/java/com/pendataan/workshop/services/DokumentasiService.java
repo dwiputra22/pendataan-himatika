@@ -7,6 +7,7 @@ import com.pendataan.workshop.repositories.WorkshopRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,13 +33,21 @@ public class DokumentasiService {
 
     private final DokumentasiRepository dokumentasiRepository;
     private final WorkshopRepository workshopRepository;
-    private static final Logger log = LoggerFactory.getLogger(ProposalService.class);
+    private static final Logger log = LoggerFactory.getLogger(DokumentasiService.class);
     public final String uploadDirectory = System.getProperty("user.dir") + "/files/dokumentasi-workshop";
 
 
     public ModelAndView getAllDokumentasi() {
         ModelAndView mav = new ModelAndView();
-        List<Workshop> workshop = workshopRepository.findAll();
+        List<Workshop> workshop = workshopRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        mav.getModelMap().addAttribute("workshop", workshop);
+        mav.setViewName("dokumentasiWorkshop");
+        return mav;
+    }
+
+    public ModelAndView findDokumentasi(String judulWorkshop) {
+        ModelAndView mav = new ModelAndView();
+        Workshop workshop = workshopRepository.findByJudulWorkshop(judulWorkshop);
         mav.getModelMap().addAttribute("workshop", workshop);
         mav.setViewName("dokumentasiWorkshop");
         return mav;
@@ -46,7 +55,9 @@ public class DokumentasiService {
 
     public ModelAndView getDokumentasi(Long workshopId) {
         ModelAndView mav = new ModelAndView();
-        DokumentasiWorkshop dokumentasi = dokumentasiRepository.getById(workshopId);
+        List<DokumentasiWorkshop> dokumentasi = dokumentasiRepository.getByWorkshopId(workshopId);
+        Workshop workshop = workshopRepository.getById(workshopId);
+        mav.getModelMap().addAttribute("workshop", workshop);
         mav.getModelMap().addAttribute("dokumentasi", dokumentasi);
         mav.setViewName("tampilDokumentasi");
         return mav;
@@ -69,15 +80,15 @@ public class DokumentasiService {
         } else {
             log.info("uploadDirectory:: " + uploadDirectory);
             String fileName = StringUtils.cleanPath(fileDokumentasi.getOriginalFilename());
-            String filePath = Paths.get(uploadDirectory, fileName).toString();
+            String filePath = Paths.get(uploadDirectory, String.valueOf(workshopId), fileName).toString();
             log.info("FileName: " + fileDokumentasi.getOriginalFilename());
             try {
-                File dir = new File(uploadDirectory);
+                File dir = new File(uploadDirectory + "/" + workshopId);
                 if (!dir.exists()) {
                     log.info("Folder Created");
                     dir.mkdirs();
                 } else {
-                    log.info("Folder Gagal Dibuat");
+                    log.info("Folder Sudah Dibuat");
                 }
                 // Save the file locally
                 BufferedOutputStream stream = new BufferedOutputStream(Files.newOutputStream(new File(filePath).toPath()));
@@ -86,8 +97,8 @@ public class DokumentasiService {
 
                 try {
                     log.info("Tanggal Dokumentasi: " + dokumentasiWorkshop.getTanggalDokumentasi());
-                    log.info("Type File: " + dokumentasiWorkshop.getType());
-                    log.info("Nama File: " + dokumentasiWorkshop.getDocName());
+                    log.info("Type File: " + fileDokumentasi.getContentType());
+                    log.info("Nama File: " + fileName);
 
                     DokumentasiWorkshop dokumen = DokumentasiWorkshop.builder()
                             .tanggalDokumentasi(dokumentasiWorkshop.getTanggalDokumentasi())
@@ -107,7 +118,7 @@ public class DokumentasiService {
                         return dokumentasiRepository.save(dokumentasiWorkshop);
                     });
                     if (dokumentasi.isPresent()) {
-                        response.sendRedirect("/himatika/dokumentasi");
+                        response.sendRedirect("/himatika/dokumentasi/" + workshopId);
                         return new ResponseEntity<>("Berhasil Upload Dokumentasi", HttpStatus.OK);
                     }
                 } catch (Exception e) {
@@ -125,8 +136,8 @@ public class DokumentasiService {
         }
     }
 
-    public ResponseEntity<byte[]> downloadDokumentasi(Long id, String docName) {
-        DokumentasiWorkshop file = dokumentasiRepository.findByDocName(id, docName);
+    public ResponseEntity<byte[]> showImage(String docName) {
+        DokumentasiWorkshop file = dokumentasiRepository.findByDocName(docName);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + docName)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -163,20 +174,21 @@ public class DokumentasiService {
     }
 
     public ResponseEntity<?> delete(Long id,
+                                    Long workshopId,
                                     String fileName,
                                     HttpServletResponse response) {
         String path = uploadDirectory + "/" + fileName;
         File file = new File(path);
         try {
             if (id != null) {
-                dokumentasiRepository.deleteByWorkshopId(id);
-                String pathFile = uploadDirectory + "/" + fileName;
+                dokumentasiRepository.deleteById(id);
+                String pathFile = uploadDirectory + "/" + workshopId + "/" + fileName;
                 System.out.println("Path=" + pathFile);
                 File fileToDelete = new File(pathFile);
                 boolean status = fileToDelete.delete();
                 System.out.println(this.getClass().getSimpleName() + ":deleting file... " + file);
                 System.out.println("Success: " + status + " fileToDelete: " + fileToDelete);
-                response.sendRedirect("/himatika/dokumentasi");
+                response.sendRedirect("/himatika/dokumentasi/" + workshopId);
                 return new ResponseEntity<>("Success Deleted", HttpStatus.OK);
             } else {
                 log.info("Oops! File Not Found: " + fileName);

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lpj Workshop</title>
+    <link href="/static/css/tampilLpj.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
+    <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito&display=swap"/>
+    <link rel="icon" type="image/png" href="/static/img/logo.png"/>
+    <script type="text/javascript" src="/static/js/lpj.js"></script>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/jquery-slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="sidebar">
+
+    <img class="logo" src="/static/img/logo.png"/>
+
+    <ul class="dokumen">
+        <li class="dashboard2">
+            <a class="list-hover" th:href="@{http://localhost:8081/himatika}">Dashboard</a>
+        </li>
+
+        <li class="anggota">
+            <a class="list-hover" th:href="@{http://localhost:8080/himatika/anggota}">Anggota</a>
+        </li>
+
+        <li class="workshop mb-1">
+            <a class="list-hover" th:href="@{http://localhost:8081/himatika/workshop}">Workshop</a>
+            <div class="btnworkshop">
+                <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                </button>
+            </div>
+
+            <div class="collapse" id="home-collapse" style="">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a th:href="@{http://localhost:8081/himatika/proposal-workshop}"
+                           class="list-menu">Proposal</a>
+                    </li>
+                    <li>
+                        <a th:href="@{http://localhost:8081/himatika/lpj-workshop}"
+                           class="list-menu rounded">Lpj</a></li>
+                    <li>
+                        <a th:href="@{http://localhost:8081/himatika/dokumentasi}" class="list-menu">Dokumentasi</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="peserta-workshop mb-1">
+            <a class="list-hover">Peserta Workshop</a>
+            <div class="btnworkshop">
+                <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                </button>
+            </div>
+            <div class="collapse" id="dashboard-collapse" style="">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a th:href="@{http://localhost:8082/himatika/pendaftaran}" class="list-menu">Pendaftaran
+                            Peserta</a>
+                    </li>
+                    <li>
+                        <a th:href="@{http://localhost:8082/himatika/absensi}" class="list-menu">Absensi Peserta</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+    <div class="logout">
+        <img class="logout-icon" src="/static/img/logout.png">
+        <a class="logout2" th:href="@{http://localhost:8080/logout}">Logout</a>
+    </div>
+</div>
+<div class="rectangle-1">
+    <div class="detail-name">Detail Dokumen Lpj</div>
+    <a class="circle-button" th:href="@{/himatika/lpj-workshop}">
+        <span class="plus-icon"></span>
+    </a>
+    <div class="workshop-name" th:each="w : ${workshop}">
+        <div class="nama-workshop">Nama Workshop :</div>
+        <div class="judul" th:text="${w.judulWorkshop}"></div>
+        <a class="input-proposal"
+           th:href="@{/himatika/lpj-workshop/{workshopId}/input (workshopId=${w.id})}">Input Lpj
+        </a>
+    </div>
+
+    <table class="proposal-detail" th:each="l :${lpj}">
+        <tr>
+            <th>Nim</th>
+            <th>:</th>
+            <td th:text="${l.nim}"></td>
+        </tr>
+        <tr>
+            <th>Nama</th>
+            <th>:</th>
+            <td th:text="${l.nama}"></td>
+        </tr>
+        <tr>
+            <th>Tahun kepengurusan</th>
+            <th>:</th>
+            <td th:text="${l.tahunKepengurusan}"></td>
+        </tr>
+        <tr>
+            <th>Judul Workshop</th>
+            <th>:</th>
+            <td th:text="${workshop.judulWorkshop}"></td>
+        </tr>
+        <tr>
+            <th>Created Date</th>
+            <th>:</th>
+            <td th:text="${#temporals.format(l.createdDate, 'dd-MM-yyyy HH:mm a')}"></td>
+        </tr>
+        <tr>
+            <th>File Lpj</th>
+            <th>:</th>
+            <td th:text="${l.docName}"></td>
+        </tr>
+        <div class="button">
+            <a class="btn-edit" th:href="@{/himatika/lpj-workshop/editLpj/{id} (id=${workshop.id})}">Edit Lpj</a>
+            <a class="btn-download" th:href="@{/himatika/lpj-workshop/download/{docName} (docName=${l.docName})}">Download File</a>
+<!--            <a class="btn-delete" th:href="@{/himatika/lpj-workshop/deleteLpj/{id} (id=${workshop.id})}">Delete Lpj</a>-->
+            <button type="button" class="btn-delete" data-toggle="modal" data-target="#exampleModalCenter">
+                Delete Proposal
+            </button>
+        </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Form Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/himatika/lpj-workshop/deleteProposal/{id}/deleted (id=${workshop.id})}"
+                              th:object="${lpj}"
+                              method="get"
+                              class="form-proposal">
+                            <div class="form-input">
+                                <label for="nim" class="text-label">Nim</label>
+                                <input id="nim" th:value="*{nim}" type="text" name="nim"
+                                       th:errorClass="is-invalid"
+                                       class="input"
+                                       placeholder="Masukkan Nim Anda">
+                                <p th:errors="${nim}" class="invalid-feedback"
+                                   th:if="${#fields.hasErrors('nim')}"></p>
+                            </div>
+                            <div class="form-input">
+                                <label for="nama" class="text-label">Nama Lengkap</label>
+                                <input id="nama" th:value="*{nama}" type="text" name="nama"
+                                       th:errorClass="is-invalid"
+                                       class="input"
+                                       placeholder="Masukkan Nama Anda">
+                                <p th:errors="${nama}" class="invalid-feedback"
+                                   th:if="${#fields.hasErrors('nama')}"></p>
+                                <div class="form-input">
+                                    <input class="btn-submit"
+                                           type="submit" value="Delete">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>
+</body>
+</html>

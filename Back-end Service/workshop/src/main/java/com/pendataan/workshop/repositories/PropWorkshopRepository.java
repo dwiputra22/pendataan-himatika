@@ -2,9 +2,8 @@ package com.pendataan.workshop.repositories;
 
 
 import com.pendataan.workshop.entity.ProposalWorkshop;
+import com.pendataan.workshop.entity.Workshop;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +14,7 @@ import java.util.Optional;
 public interface PropWorkshopRepository extends JpaRepository<ProposalWorkshop, Long> {
 
     @Transactional
-    @Modifying
-    @Query("select p from ProposalWorkshop p where p. id like ?1 and p. docName like ?2")
-    Optional<ProposalWorkshop> findByDocName(Long id, String docName);
+    Optional<ProposalWorkshop> findByDocName(String docName);
 //    @Transactional
 //    @Modifying
 //    @Query("delete from ProposalWorkshop p where p. id like ?1 and p. workshopId like ?2")
@@ -26,5 +23,9 @@ public interface PropWorkshopRepository extends JpaRepository<ProposalWorkshop, 
 //    @Transactional
 //    @Modifying
 //    @Query("select p from ProposalWorkshop p where p. id like ?1 and p. workshopId like ?2")
-    ProposalWorkshop getByWorkshop(Long workshopId);
+//    ProposalWorkshop getByWorkshop(Long workshopId);
+
+    ProposalWorkshop getByWorkshopId(Long workshopId);
+
+    Workshop findByWorkshopId(Long workshopId);
 }

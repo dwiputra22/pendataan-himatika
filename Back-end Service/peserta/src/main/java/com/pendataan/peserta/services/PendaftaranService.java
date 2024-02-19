@@ -1,13 +1,14 @@
 package com.pendataan.peserta.services;
 
 
-import com.pendataan.peserta.entity.PendaftaranWorkshop;
-import com.pendataan.peserta.repositories.PendaftaranRepository;
-import com.pendataan.workshop.entity.Workshop;
-import com.pendataan.workshop.repositories.WorkshopRepository;
+import com.pendataan.peserta.entity.PesertaWorkshop;
+import com.pendataan.peserta.repositories.PesertaRepository;
+import com.pendataan.peserta.entity.Workshop;
+import com.pendataan.peserta.repositories.WorkshopRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,82 +24,57 @@ import java.util.List;
 public class PendaftaranService {
 
     private static final Logger log = LoggerFactory.getLogger(AbsensiService.class);
-    private final PendaftaranRepository pendaftaranRepository;
+    private final PesertaRepository pesertaRepository;
     private final WorkshopRepository workshopRepository;
 
 
-    public ResponseEntity<?> getAllPendaftaran(String judulWorkshop) {
-//        ModelAndView mav = new ModelAndView();
+    public ModelAndView getAllPendaftaran() {
+        ModelAndView mav = new ModelAndView();
         try {
-            List<Workshop> workshop = workshopRepository.findAll();
+            List<Workshop> workshop = workshopRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 //            List<PendaftaranWorkshop> pendaftaranList = pendaftaranRepository.findAll();
 //             List<ProposalWorkshop> judul = propWorkshopRepository.getByJudulWorkshop(proposalWorkshop.getJudulWorkshop());
-//            mav.getModelMap().addAttribute("absensiList", absensiList);
-//            mav.setViewName("absensi");
-//            return mav;
-            return new ResponseEntity<>(workshop, HttpStatus.OK);
+            mav.getModelMap().addAttribute("workshop", workshop);
+            mav.setViewName("pendaftaranWorkshop");
+            return mav;
+//            return new ResponseEntity<>(workshop, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             log.info("Exception: " + e);
-//            return mav;
-            return new ResponseEntity<>("Gagal Menampilkan Data", HttpStatus.BAD_REQUEST);
+            return mav;
+//            return new ResponseEntity<>("Gagal Menampilkan Data", HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<?> getPendaftaranByIdWorkshop(Long workshopId) {
-//        ModelAndView mav = new ModelAndView();
-        try {
-            PendaftaranWorkshop pendaftaran = pendaftaranRepository.getById(workshopId);
-//            mav.getModelMap().addAttribute("absensiList", absensiList);
-//            mav.setViewName("absensiWorkshop");
-//            return mav;
-            return new ResponseEntity<>(pendaftaran, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.info("Exception: " + e);
-//            return mav;
-            return new ResponseEntity<>("Gagal Menampilkan Data", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    public ModelAndView formPendaftaran(Long workshopId) {
+    public ModelAndView findPendaftaran(String judulWorkshop) {
         ModelAndView mav = new ModelAndView();
-//        ProposalWorkshop judul = absensiRepository.findByJudulWorkshop(judulWorkshop);
-        PendaftaranWorkshop formPendaftaran = new PendaftaranWorkshop();
-        mav.getModelMap().addAttribute("formPendaftaran", formPendaftaran);
-        mav.setViewName("formPendaftaran");
+        Workshop workshop = workshopRepository.findByJudulWorkshop(judulWorkshop);
+        mav.getModelMap().addAttribute("workshop", workshop);
+        mav.setViewName("pendaftaranWorkshop");
         return mav;
     }
 
-    public ResponseEntity<?> uploadPendaftaran(String judulWorkshop,
-                                               PendaftaranWorkshop pendaftaran,
-                                               HttpServletResponse response) {
-        PendaftaranWorkshop pendaftaranWorkshop = new PendaftaranWorkshop();
-
-        pendaftaranWorkshop.setNim(pendaftaran.getNim());
-        pendaftaranWorkshop.setNama(pendaftaran.getNama());
-        pendaftaranWorkshop.setEmail(pendaftaran.getEmail());
-        pendaftaranWorkshop.setProgramStudi(pendaftaran.getProgramStudi());
-        pendaftaranWorkshop.setThnAngkatan(pendaftaran.getThnAngkatan());
-        pendaftaranWorkshop.setJudulWorkshop(pendaftaran.getJudulWorkshop());
-
-        if (pendaftaranWorkshop != null) {
-            log.info("nim: " + pendaftaran.getNim());
-            log.info("nama: " + pendaftaran.getNama());
-            log.info("email: " +pendaftaran.getEmail());
-            log.info("Program Studi: " + pendaftaran.getProgramStudi());
-            log.info("Tahun Angkatan: " + pendaftaran.getThnAngkatan());
-            log.info("judulWorkshop: " + pendaftaran.getJudulWorkshop());
-            pendaftaranRepository.save(pendaftaranWorkshop);
-        } else {
-            return new ResponseEntity<>("Gagal Menyimpan", HttpStatus.BAD_REQUEST);
+    public ModelAndView getPendaftaran(String judulWorkshop) {
+        ModelAndView mav = new ModelAndView();
+        try {
+            List<PesertaWorkshop> pendaftaran = pesertaRepository.getByJudulWorkshop(judulWorkshop);
+            Workshop workshop = workshopRepository.getByJudulWorkshop(judulWorkshop);
+            mav.getModelMap().addAttribute("workshop", workshop);
+            mav.getModelMap().addAttribute("pendaftaran", pendaftaran);
+            mav.setViewName("listPendaftaran");
+            return mav;
+//            return new ResponseEntity<>(pendaftaran, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("Exception: " + e);
+            return mav;
+//            return new ResponseEntity<>("Gagal Menampilkan Data", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Berhasil Input Absensi", HttpStatus.OK);
     }
 
     public ModelAndView editPendaftaran(String judulWorkshop, Long id) {
         ModelAndView mav = new ModelAndView();
-        PendaftaranWorkshop pendaftaranWorkshop = pendaftaranRepository.getById(id);
+        PesertaWorkshop pendaftaranWorkshop = pesertaRepository.getById(id);
         mav.getModelMap().addAttribute("pendaftaranWorkshop", pendaftaranWorkshop);
         mav.setViewName("editPendaftaran");
         return mav;
@@ -107,16 +83,17 @@ public class PendaftaranService {
     public ResponseEntity<?> updatePendaftaran(Long id,
                                            String judulWorkshop,
                                            HttpServletResponse response,
-                                           PendaftaranWorkshop pendaftaran) throws IOException {
+                                           PesertaWorkshop pendaftaran) throws IOException {
 
-        PendaftaranWorkshop update = pendaftaranRepository.getByJudulWorkshop(id, judulWorkshop);
-        update.setNim(pendaftaran.getNim());
+        PesertaWorkshop update = pesertaRepository.getByJudulWorkshop(id, judulWorkshop);
         update.setNama(pendaftaran.getNama());
-        update.setProgramStudi(pendaftaran.getProgramStudi());
-        update.setThnAngkatan(pendaftaran.getThnAngkatan());
+        update.setEmail(pendaftaran.getEmail());
+        update.setAsalInstansi(pendaftaran.getAsalInstansi());
+        update.setPekerjaan(pendaftaran.getPekerjaan());
         update.setJudulWorkshop(pendaftaran.getJudulWorkshop());
+        update.setAsalInfo(pendaftaran.getAsalInfo());
         update.setUpdatedDate(LocalDateTime.now());
-        pendaftaranRepository.save(update);
+        pesertaRepository.save(update);
         response.sendRedirect("/himatika/pendaftaran");
         return new ResponseEntity<>( "Berhasil Memperbarui Data",HttpStatus.OK);
     }
@@ -126,7 +103,7 @@ public class PendaftaranService {
                                             HttpServletResponse response) throws IOException {
         try {
             if (judulWorkshop != null) {
-                pendaftaranRepository.deleteByJudulWorkshop(id, judulWorkshop);
+                pesertaRepository.deleteByJudulWorkshop(id, judulWorkshop);
 //                response.sendRedirect("/himatika/proposal-workshop");
                 return new ResponseEntity<>("Success Deleted", HttpStatus.OK);
             } else {

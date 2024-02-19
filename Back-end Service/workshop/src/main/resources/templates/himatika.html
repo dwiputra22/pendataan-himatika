@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
     <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito@800&display=swap"/>
+    <link rel="icon" type="image/png" href="/static/img/logo.png"/>
     <script type="text/javascript" src="/static/js/himatika.js"></script>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/jquery-slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div class="dashboard">
@@ -27,60 +32,85 @@
                 <a class="list-hover" th:href="@{http://localhost:8080/himatika/anggota}">Anggota</a>
             </li>
 
-            <li class="workshop">
-                <div>
-                    <a class="list-hover" th:href="@{http://localhost:8081/himatika/workshop}">Workshop</a>
+            <li class="workshop mb-1">
+                <a class="list-hover" th:href="@{http://localhost:8081/himatika/workshop}">Workshop</a>
+                <div class="btnworkshop">
+                    <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                            data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                    </button>
                 </div>
-                <ul class="list-workshop">
-                    <li><a class="proposal-workshop" th:href="@{http://localhost:8081/himatika/proposal-workshop}">Proposal</a></li>
-                    <li><a class="lpj-workshop" th:href="@{http://localhost:8081/himatika/lpj-workshop}">Lpj</a></li>
-                    <li><a class="dokumentasi-workshop" th:href="@{http://localhost:8081/himatika/dokumentasi}">Dokumentasi</a></li>
-                </ul>
+
+                <div class="collapse" id="home-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <a th:href="@{http://localhost:8081/himatika/proposal-workshop}"
+                               class="list-menu">Proposal</a>
+                        </li>
+                        <li>
+                            <a th:href="@{http://localhost:8081/himatika/lpj-workshop}"
+                               class="list-menu rounded">Lpj</a></li>
+                        <li>
+                            <a th:href="@{http://localhost:8081/himatika/dokumentasi}" class="list-menu">Dokumentasi</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
 
-            <li class="peserta-workshop">
-                <div>
-                    <a class="list-hover">Peserta Workshop</a>
+            <li class="peserta-workshop mb-1">
+                <a class="list-hover">Peserta Workshop</a>
+                <div class="btnworkshop">
+                    <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                            data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                    </button>
                 </div>
-                <ul class="list-peserta">
-                    <li><a class="proposal-workshop" th:href="@{#}">Pendaftaran Peserta</a></li>
-                    <li><a class="lpj-workshop" th:href="@{#}">Absensi Peserta</a></li>
-                </ul>
+                <div class="collapse" id="dashboard-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <a th:href="@{http://localhost:8082/himatika/pendaftaran}" class="list-menu">Pendaftaran
+                                Peserta</a>
+                        </li>
+                        <li>
+                            <a th:href="@{http://localhost:8082/himatika/absensi}" class="list-menu">Absensi Peserta</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
-
         </ul>
 
         <div class="logout">
             <img class="logout-icon" src="/static/img/logout.png">
-            <a class="logout2" th:href="@{/logout}">Logout</a>
+            <a class="logout2" th:href="@{http://localhost:8080/logout}">Logout</a>
         </div>
     </div>
 
     <div class="total">
         <div class="total-peserta">
-            <div class="rectangle-10"></div>
+            <div class="rectangle-10">
+                <div class="total-peserta2">Total Peserta</div>
 
-            <div class="total-peserta2">Total Peserta</div>
+                <div class="laporan-bulanan">Laporan Bulanan</div>
 
-            <div class="laporan-bulanan">Laporan Bulanan</div>
-
-            <div class="count">150</div>
+                <div class="count" th:text="${absensi}"></div>
+            </div>
         </div>
 
         <div class="total-workshop">
-            <div class="rectangle-9"></div>
+            <div class="rectangle-9">
+                <div class="total-workshop2">Total Workshop</div>
 
-            <div class="total-workshop2">Total Workshop</div>
+                <div class="laporan-bulanan2">Laporan Bulanan</div>
 
-            <div class="laporan-bulanan2">Laporan Bulanan</div>
-
-            <div class="count2">150</div>
+                <div class="count2" th:utext="${countW}"></div>
+            </div>
         </div>
     </div>
 
     <div class="status-workshop">
         <div class="rectangle-11">
             <div class="noticeboard">Noticeboard</div>
+            <button type="button" class="btn-aktivitas" data-toggle="modal" data-target="#exampleModalLong">
+                Log Aktivitas
+            </button>
             <div class="rectangle-27">
                 <div class="line-1"></div>
                 <div class="line-2"></div>
@@ -94,15 +124,53 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="row" th:each="w :${workshop}">
-                        <td class="value-tanggal" th:text="${w.tanggalWorkshop}"></td>
+                    <tr class="row-value" th:each="w :${workshop}">
+                        <td class="value-tanggal"
+                            th:text="${#temporals.format(w.tanggalWorkshop, 'dd-MM-yyyy HH:mm a')}"></td>
                         <td class="value-workshop" th:text="${w.judulWorkshop}"></td>
                         <td class="value-status" th:text="${w.status}"></td>
                     </tr>
                     </tbody>
                 </table>
-                <button class="previous">previous</button>
-                <button class="next">next</button>
+                <a class="previous">&#8249;&#8249;</a>
+                <a class="next">&#8250;&#8250;</a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Log Aktivitas</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="line-modal"></div>
+                        <table class="table-aktivitas">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="nim">Nim</th>
+                                <th scope="col" class="nama">Nama</th>
+                                <th scope="col" class="aktivitas">Aktivitas</th>
+                                <th scope="col" class="judul">Judul Workshop</th>
+                                <th scope="col" class="tanggal-modal">Tanggal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="row-value-modal" th:each="c :${customLogs}">
+                                <td class="value-nim" th:text="${c.nim}"></td>
+                                <td class="value-nama" th:text="${c.nama}"></td>
+                                <td class="value-aktivitas" th:text="${c.aktivitas}"></td>
+                                <td class="value-judul" th:text="${c.judulWorkshop}"></td>
+                                <td class="value-tanggalmodal"
+                                    th:text="${#temporals.format(c.tanggal, 'dd-MM-yyyy HH:mm a')}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,246 @@
+.page-form,
+.page-form * {
+  box-sizing: border-box;
+}
+.page-form {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.navbar-page {
+  background: #1c53a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  inset: 0px;
+}
+
+.navbar-items {
+  display: block;
+  padding-right: 75px;
+  padding-left: 10px;
+
+}
+
+.title-navbar {
+  padding: 5px 10px 5px 10px;
+  font: 800 18px "Nunito", sans-serif;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.title-navbar:hover {
+  background-color: #FFFFFF60;
+  border-radius: 5px;
+}
+
+.footer-page {
+  background: #1c53a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 125px;
+  width: 100%;
+  height: 210px;
+  position: absolute;
+}
+
+.logo-footer {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 100px;
+}
+
+.bagian {
+    display: grid;
+    margin: 0px 20px 0px 10px;
+    position: relative;
+    left: 180px;
+}
+
+.isi {
+    font: 800 18px "Nunito", sans-serif;
+    color: #ffffff;
+}
+
+.sub-alamat {
+    font: 100 13px "Nunito", sans-serif;
+    color: #ffffff;
+    width: 400px;
+}
+
+.sub-isi {
+    font: 100 13px "Nunito", sans-serif;
+    color: #ffffff;
+    width: 240px;
+}
+
+.sosmed {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.body-absensi {
+    display: flex;
+    position: relative;
+    justify-items: center;
+    align-items: center;
+    top: 90px;
+    justify-content: center;
+}
+
+.form-absensi {
+    height: 530px;
+}
+
+.rectangle-1 {
+  background: #bad5fe;
+  border-radius: 10px;
+  width: 1015px;
+  height: 500px;
+  box-shadow: 0px 4px 4px 0px rgba(112, 150, 248, 1);
+}
+
+.form-input {
+  display: grid;
+  justify-content: left;
+  margin-top: 260px;
+  top: 200px;
+  margin-left: 60px;
+}
+
+.form-input2 {
+  display: grid;
+  margin-top: -15px;
+  position: relative;
+  top: -95px;
+  left: 550px;
+  width: 400px;
+}
+
+.form-input3 {
+    display: grid;
+    margin-top: -5px;
+    position: absolute;
+    margin-left: 60px;
+    width: 400px;
+}
+
+.form-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.peserta-detail {
+    position: absolute;
+    top: 135px;
+    left: 250px;
+    color: rgb(16, 83, 169);
+}
+
+.text-label {
+  position: relative;
+  top: 40px;
+  color: #1053a9;
+  font: 800 15px/30px "Nunito", sans-serif;
+}
+
+.input {
+  border-radius: 10px;
+  box-shadow-width: 1px;
+  box-shadow: 0px 0px 0px 1px rgba(16, 83, 169, 1) inset;
+  background-color: white;
+  filter: drop-shadow(0px 4px 4px rgba(115, 152, 248, 0.71));
+  box-sizing: border-box;
+  border-style: none;
+  height: 40px;
+  width: 400px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 40px;
+  color: #757575;
+  font: 400 15px/30px "Nunito", sans-serif;
+}
+
+.input-judul {
+  position: absolute;
+  border-radius: 10px;
+  box-shadow-width: 1px;
+  box-shadow: 0px 0px 0px 1px rgba(16, 83, 169, 1) inset;
+  background-color: white;
+  filter: drop-shadow(0px 4px 4px rgba(115, 152, 248, 0.71));
+  box-sizing: border-box;
+  border-style: none;
+  height: 40px;
+  width: 400px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 70px;
+  color: #757575;
+  font: 400 15px/30px "Nunito", sans-serif;
+}
+
+.btn {
+position: absolute;
+}
+
+.icon-search {
+  position: absolute;
+  left: 360px;
+  top: 78px;
+  height: 24px;
+  width: 24px;
+}
+
+.btn-cari {
+    border-radius: 10px;
+    background-color: rgba(27, 72, 186, 1);
+    border-style: none;
+    border: none;
+    height: 40px;
+    width: 70px;
+    color: #ffff;
+    text-align: center;
+    position: absolute;
+    top: 70px;
+    left: 420px;
+    font-size: 15px;
+    font-family: Nunito;
+}
+
+.btn-submit {
+    border-radius: 10px;
+    background-color: rgba(27, 72, 186, 1);
+    border-style: none;
+    border: none;
+    height: 40px;
+    width: 250px;
+    color: #ffff;
+    text-align: center;
+    position: absolute;
+    bottom: 40px;
+    font-size: 15px;
+    font-family: Nunito;
+}
+
+
+.input-proposal {
+  color: #1053a9;
+  text-align: center;
+  font: 800 20px/30px "Nunito", sans-serif;
+  position: relative;
+
+}

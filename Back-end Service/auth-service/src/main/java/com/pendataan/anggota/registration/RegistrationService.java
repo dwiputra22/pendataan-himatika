@@ -1,5 +1,6 @@
 package com.pendataan.anggota.registration;
 
+import com.pendataan.anggota.email.EmailSender;
 import com.pendataan.anggota.entity.Anggota;
 import com.pendataan.anggota.entity.Role;
 import com.pendataan.anggota.registration.token.ConfirmationToken;
@@ -21,7 +22,7 @@ public class RegistrationService {
 
     private final AnggotaService anggotaService;
     private final EmailValidator emailValidator;
-//    private final EmailSender emailSender;
+    private final EmailSender emailSender;
     private final ConfirmationTokenService confirmationTokenService;
     private final AnggotaRepository anggotaRepository;
 
@@ -58,14 +59,14 @@ public class RegistrationService {
                         request.getNoTelepon(),
                         request.getEmail(),
                         request.getPassword(),
-                        Role.USER
+                        Role.ADMIN
                 )
         );
 
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
-//        emailSender.send(
-//                request.getEmail(),
-//                buildEmail(request.getNim(), link));
+        emailSender.send(
+                request.getEmail(),
+                buildEmail(request.getNim(), link));
         response.sendRedirect("https://mail.google.com/mail/");
         return token;
     }
@@ -87,7 +88,7 @@ public class RegistrationService {
         }
 
         confirmationTokenService.setConfirmedAt(token);
-        anggotaService.enableUsers(confirmationToken.getAnggota().getEmail());
+        anggotaService.enableUsers(confirmationToken.getAnggota().getNim());
         response.sendRedirect("/login");
         return "Berhasil";
     }

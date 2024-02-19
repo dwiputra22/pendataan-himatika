@@ -1,5 +1,6 @@
 package com.pendataan.workshop.controllers;
 
+import com.pendataan.workshop.entity.CustomLog;
 import com.pendataan.workshop.entity.LpjWorkshop;
 import com.pendataan.workshop.services.LpjService;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,15 @@ public class LpjController {
 
     @GetMapping(path = "/lpj-workshop")
     public ModelAndView showAllLpj() {
-        return lpjService.getAllLpj();
+        return lpjService.pageLpj();
     }
 
-    @GetMapping(path = "/lpj-workshop/{workshopid}")
+    @GetMapping(path = "/lpj-workshop/get")
+    public ModelAndView getWorkshop(@RequestParam(value = "judulWorkshop") String judulWorkshop) {
+        return lpjService.getWorkshopLpj(judulWorkshop);
+    }
+
+    @GetMapping(path = "/lpj-workshop/{workshopId}")
     public ModelAndView showLpj(@PathVariable("workshopId") Long workshopId) {
         return lpjService.getLpj(workshopId);
     }
@@ -47,21 +53,20 @@ public class LpjController {
         return lpjService.uploadlpj(workshopId, lpjWorkshop, suratLpj, response);
     }
 
-    @GetMapping(path = "/lpj-workshop/{id}/download/{docName}")
-    public ResponseEntity<?> downloadFile(@PathVariable("id") Long id,
-                                          @PathVariable String docName) throws IOException {
+    @GetMapping(path = "/lpj-workshop/download/{docName}")
+    public ResponseEntity<?> downloadFile(@PathVariable String docName) throws IOException {
 //        ResponseEntity<Resource> fileLpj = lpjService.downloadlpj(docName);
 //        return ResponseEntity.status(HttpStatus.OK)
 //                .contentType(MediaType.APPLICATION_PDF)
 //                .body(fileLpj.getBody());
-        return lpjService.downloadlpj(id, docName);
+        return lpjService.downloadlpj(docName);
     }
 
     @GetMapping(path = "/lpj-workshop/deleteLpj/{id}")
     public @ResponseBody ResponseEntity<?> deleteLpj(@PathVariable("id") Long id,
-                                                     String docName,
+                                                     CustomLog logInfo,
                                                      HttpServletResponse response) {
-        return lpjService.deletedLpj(id, docName, response);
+        return lpjService.deletedLpj(id, logInfo, response);
     }
 
     @GetMapping(path = "/lpj-workshop/editLpj/{id}")

@@ -5,91 +5,125 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
-  <title>Form Update Lpj</title>
+  <link href="/static/css/form-proposal.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800"/>
+  <link rel="stylesheet" href="https://api.fontshare.com/css?f[]=nunito@800&display=swap"/>
+  <link rel="icon" type="image/png" href="/static/img/logo.png"/>
+  <script type="text/javascript" src="/static/js/formProposal.js"></script>
+  <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <title>Form Lpj</title>
 </head>
-<body class="h-screen">
-<div class="container mx-auto h-full flex justify-center items-center text-green-700 px-4">
-  <div class="md:w-1/3 shadow-xl rounded-2xl border bg-green-100 w-full">
-    <h1 class="text-center font-medium text-2xl text-white rounded-t-2xl bg-green-500 py-4">Update Lpj</h1>
-    <div th:if="${param.success}">
-      <div class="alert alert-info">
-        You have successfully input Lpj!
-      </div>
+<body>
+<div class="form-proposal">
+  <div class="rectangle-7"></div>
+
+  <div class="sidebar">
+    <img class="logo" src="/static/img/logo.png"/>
+    <ul class="dokumen">
+      <li class="dashboard2">
+        <a class="list-hover" th:href="@{http://localhost:8081/himatika}">Dashboard</a>
+      </li>
+
+      <li class="anggota">
+        <a class="list-hover" th:href="@{http://localhost:8080/himatika/anggota}">Anggota</a>
+      </li>
+
+      <li class="workshop mb-1">
+        <a class="list-hover" th:href="@{http://localhost:8081/himatika/workshop}">Workshop</a>
+        <div class="btnworkshop">
+          <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                  data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          </button>
+        </div>
+
+        <div class="collapse" id="home-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li>
+              <a th:href="@{http://localhost:8081/himatika/proposal-workshop}" class="list-menu">Proposal</a>
+            </li>
+            <li>
+              <a th:href="@{http://localhost:8081/himatika/lpj-workshop}"
+                 class="list-menu rounded">Lpj</a></li>
+            <li>
+              <a th:href="@{http://localhost:8081/himatika/dokumentasi}" class="list-menu">Dokumentasi</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="peserta-workshop mb-1">
+        <a class="list-hover">Peserta Workshop</a>
+        <div class="btnworkshop">
+          <button class="btn dropdown-toggle align-items-center rounded collapsed"
+                  data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+          </button>
+        </div>
+        <div class="collapse" id="dashboard-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li>
+              <a th:href="@{http://localhost:8082/himatika/pendaftaran}" class="list-menu">Pendaftaran Peserta</a>
+            </li>
+            <li>
+              <a th:href="@{http://localhost:8082/himatika/absensi}" class="list-menu">Absensi Peserta</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+    <div class="logout">
+      <img class="logout-icon" src="/static/img/logout.png">
+      <a class="logout2" th:href="@{http://localhost:8080/logout}">Logout</a>
     </div>
-    <form
-            th:object="${lpjInput}"
-            th:action="@{/himatika/lpj-workshop/{id}(id=${lpjInput.id})}"
-            method="post"
-            class="border-teal p-4 border-t-12 bg-white mb-6"
-            enctype="multipart/form-data">
-      <div class="mb-4">
-        <label for="nim" class="font-bold text-lg block mb-2">Nim</label>
+  </div>
+
+  <div class="rectangle-1">
+    <h1 class="input-proposal">Input Lpj</h1>
+    <form th:object="${lpjInput}"
+          th:action="@{/himatika/lpj-workshop/editLpj/{id}/update (id=${lpjInput.id})}"
+          method="post"
+          class="form-proposal"
+          enctype="multipart/form-data">
+      <div class="form-input">
+        <label for="nim" class="text-label">Nim</label>
         <input id="nim" th:value="*{nim}" type="text" name="nim"
                th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+               class="input"
                placeholder="Masukkan Nim Anda">
-        <p th:errors = "*{nim}" class="invalid-feedback"
+        <p th:errors="${nim}" class="invalid-feedback"
            th:if="${#fields.hasErrors('nim')}"></p>
       </div>
-      <div class="mb-4">
-        <label for="nama" class="font-bold text-lg block mb-2">Nama</label>
+      <div class="form-input">
+        <label for="nama" class="text-label">Nama Lengkap</label>
         <input id="nama" th:value="*{nama}" type="text" name="nama"
                th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+               class="input"
                placeholder="Masukkan Nama Anda">
-        <p th:errors = "*{nama}" class="invalid-feedback"
+        <p th:errors="${nama}" class="invalid-feedback"
            th:if="${#fields.hasErrors('nama')}"></p>
       </div>
-      <div class="mb-4">
-        <label for="tahunKepengurusan" class="font-bold text-lg block mb-2">Tahun Kepengurusan</label>
+      <div class="form-input">
+        <label for="tahunKepengurusan" class="text-label">Tahun Kepengurusan</label>
         <input id="tahunKepengurusan" th:value="*{tahunKepengurusan}" type="text" name="tahunKepengurusan"
                th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+               class="input"
                placeholder="Masukkan Tahun Kepengurusan Selama Menjabat">
-        <p th:errors = "*{tahunKepengurusan}" class="invalid-feedback"
+        <p th:errors="${tahunKepengurusan}" class="invalid-feedback"
            th:if="${#fields.hasErrors('tahunKepengurusan')}"></p>
       </div>
-      <div class="mb-4">
-        <label for="judulWorkshop" class="font-bold text-lg block mb-2">Judul Workshop</label>
-        <input id="judulWorkshop" th:value="*{judulWorkshop}" type="text" name="judulWorkshop"
+      <div class="form-input">
+        <label for="suratLpj" class="text-label">Surat Lpj</label>
+        <input id="suratLpj" th:value="*{suratLpj}" type="file" name="suratLpj"
                th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan Judul Workshop">
-        <p th:errors = "*{judulWorkshop}" class="invalid-feedback"
-           th:if="${#fields.hasErrors('judulWorkshop')}"></p>
-      </div>
-      <div class="mb-4">
-        <label for="pembicara" class="font-bold text-lg block mb-2">Pembicara</label>
-        <input id="pembicara" th:value="*{pembicara}" type="text" name="pembicara"
-               th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan Pembicara">
-        <p th:errors = "*{pembicara}" class="invalid-feedback"
-           th:if="${#fields.hasErrors('pembicara')}"></p>
-      </div>
-      <div class="mb-4">
-        <label for="tanggalWorkshop" class="font-bold text-lg block mb-2">Tanggal Workshop</label>
-        <input id="tanggalWorkshop" th:value="*{tanggalWorkshop}" type="datetime-local" name="tanggalWorkshop"
-               th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan Tanggal Workshop">
-        <p th:errors = "*{tanggalWorkshop}" class="invalid-feedback"
-           th:if="${#fields.hasErrors('tanggalWorkshop')}"></p>
-      </div>
-      <div class="mb-4">
-        <label for="suratLpj" class="font-bold text-lg block mb-2">Surat Lpj</label>
-        <input id="suratLpj"
-               type="file" name="suratLpj"
-               th:errorClass="is-invalid"
-               class="block w-full rounded p-2 rounded shadow border focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-               placeholder="Masukkan File Lpj Workshop">
-        <p th:errors = "*{suratLpj}" class="suratLpj"
+               class="input-file"
+               placeholder="Masukkan Surat Lpj Workshop">
+        <p th:errors="${suratLpj}" class="invalid-feedback"
            th:if="${#fields.hasErrors('suratLpj')}"></p>
       </div>
-      <div class="flex items-center justify-between">
-        <input class="bg-green-500 text-white text-lg font-medium p-2 rounded inline-block w-full hover:bg-green-400 transition duration-400 hover:shadow-lg"
+      <div class="form-input">
+        <input class="btn-submit"
                type="submit" value="Upload">
       </div>
     </form>
@@ -97,11 +131,3 @@
 </div>
 </body>
 </html>
-
-<style>
-    .invalid-feedback{
-    font-size: 14px;
-    font-weight: 600;
-    text-align: left;
-    }
-</style>

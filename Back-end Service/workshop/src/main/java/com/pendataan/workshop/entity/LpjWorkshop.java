@@ -21,7 +21,7 @@ public class LpjWorkshop {
     private Long id;
     @NotBlank(message = "Masukkan Nim Anda!")
     @Column(name = "nim")
-    private String nim;
+    private Integer nim;
     @NotBlank(message = "Masukkan Nama Anda!")
     @Column(name = "nama")
     private String nama;

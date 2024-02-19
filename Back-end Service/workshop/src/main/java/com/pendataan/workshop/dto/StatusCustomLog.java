@@ -1,0 +1,13 @@
+package com.pendataan.workshop.dto;
+
+public enum StatusCustomLog {
+    CREATED_PROPOSAL,
+    DELETED_PROPOSAL,
+    UPDATE_PROPOSAL,
+    CREATED_LPJ,
+    DELETED_LPJ,
+    UPDATE_LPJ,
+    CREATED_DOKUMENTASI,
+    DELETED_DOKUMENTASI,
+    UPDATE_DOKUMENTASI
+}
